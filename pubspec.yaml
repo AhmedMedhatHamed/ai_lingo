@@ -8,6 +8,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  dots_indicator: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -20,11 +21,12 @@ flutter:
    - assets/images/
 
   fonts:
-     - family: Cairo
-       fonts:
-         - asset: assets/fonts/Cairo-Bold.ttf
-         - asset: assets/fonts/Cairo-Regular.ttf
-
-     - family: Almarai
-       fonts:
-         - asset: assets/fonts/Almarai-Regular.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Cairo-Bold.ttf
+          weight: 700
+    - family: Almarai
+      fonts:
+        - asset: assets/fonts/Almarai-Regular.ttf
