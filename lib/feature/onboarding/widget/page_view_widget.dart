@@ -1,9 +1,11 @@
-import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
+import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/core/widgets/custom_button.dart';
 import 'package:ai_lingo/feature/onboarding/model/onboarding_model.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'build_show_dialog.dart';
 
 class PageViewWidget extends StatefulWidget {
   const PageViewWidget({super.key});
@@ -61,38 +63,22 @@ class _PageViewWidgetState extends State<PageViewWidget> {
                     ),
                   ),
                   Spacer(),
-                  SizedBox(
-                    width:330,
-                    height:60,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (currentIndex < onboardingList.length - 1) {
-                          controller.nextPage(
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                          );
-                        } else {
-                          Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
-                        }
-                      },
-                      style:ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.circular(12.0)
-                        ),
-                        backgroundColor: AppColors.primaryColor,
-                      ),
-                      child: Text(
-                        currentIndex == onboardingList.length - 1
-                            ? 'Get Started'
-                            : 'Next',
-                          style: AppStyles.cairo700Size36.copyWith(
-                            color: Colors.white,
-                            fontSize: 32.0,
-                          )
-                      ),
-                    ),
+                  CustomButton(
+                    text: currentIndex == onboardingList.length - 1
+                        ? AppStrings.getStarted
+                        : AppStrings.next,
+                    onPressed: () {
+                      if (currentIndex < onboardingList.length - 1) {
+                        controller.nextPage(
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      } else {
+                        buildShowDialog(context);
+                      }
+                    },
                   ),
-                  SizedBox(height: 30.0,),
+                  SizedBox(height: 30.0),
                 ],
               );
             },
@@ -101,4 +87,6 @@ class _PageViewWidgetState extends State<PageViewWidget> {
       ],
     );
   }
+
 }
+
