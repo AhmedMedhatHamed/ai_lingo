@@ -13,6 +13,8 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     required this.prefixIcon,
     this.suffixIcon,
+    this.onSuffixPressed,
+    this.onFieldSubmitted,
   });
 
   final TextEditingController controller;
@@ -23,6 +25,8 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final IconData prefixIcon;
   final IconData? suffixIcon;
+  final VoidCallback? onSuffixPressed;
+  final ValueChanged<String>? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +37,10 @@ class CustomTextField extends StatelessWidget {
         cursorColor: AppColors.primaryColor,
         style: AppStyles.almarai400Size24.copyWith(fontSize: 20.0),
         obscureText: isObscureText ?? false,
-        textInputAction: textInputAction ?? .next,
-        keyboardType: textInputType ?? .name,
+        textInputAction: textInputAction ?? TextInputAction.next,
+        keyboardType: textInputType ?? TextInputType.name,
         validator: validator,
+        onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
           labelText: text,
           labelStyle: AppStyles.cairo400Size24.copyWith(
@@ -43,12 +48,19 @@ class CustomTextField extends StatelessWidget {
             fontSize: 20.0,
           ),
           prefixIcon: Icon(prefixIcon),
-          suffixIcon: Icon(suffixIcon),
+          suffixIcon: suffixIcon == null
+              ? null
+              : IconButton(
+            icon: Icon(suffixIcon),
+            onPressed: onSuffixPressed,
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
             borderSide: BorderSide(color: AppColors.primaryColor),
           ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
         ),
       ),
     );
