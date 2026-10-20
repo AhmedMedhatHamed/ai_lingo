@@ -1,6 +1,8 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/core/widgets/custom_button.dart';
+import 'package:ai_lingo/core/widgets/custom_text_button.dart';
 import 'package:ai_lingo/core/widgets/custom_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +76,28 @@ class SignupScreen extends StatelessWidget {
                   return '';
                 },
               ),
+            ),
+            SliverToBoxAdapter(child: SizedBox(height: 30.0)),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomButton(onPressed: () {}, text: 'Sign Up'),
+              ),
+            ),
+            SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+            SliverToBoxAdapter(
+              child: Center(
+                child: Text(
+                  AppStrings.alreadyHaveAnAccount,
+                  style: AppStyles.almarai400Size24.copyWith(
+                    color: AppColors.splashColor,
+                  ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(child: SizedBox(height: 10.0)),
+            SliverToBoxAdapter(
+              child: CustomTextButton(text: AppStrings.logIn, onPressed: () {}),
             ),
           ],
         ),
