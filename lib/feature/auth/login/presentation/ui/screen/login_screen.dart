@@ -1,3 +1,4 @@
+
 import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_images.dart';
@@ -5,6 +6,9 @@ import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
 import 'package:ai_lingo/core/widgets/custom_button.dart';
 import 'package:ai_lingo/core/widgets/custom_text_button.dart';
+import 'package:ai_lingo/core/services/google_sign_in_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -18,7 +22,9 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+              SliverToBoxAdapter(
+                child: SizedBox(height: 20.0),
+              ),
               SliverToBoxAdapter(
                 child: Image.asset(
                   AppImages.appLogo,
@@ -30,23 +36,86 @@ class LoginScreen extends StatelessWidget {
                 child: Center(
                   child: Text(
                     AppStrings.appName,
-                    style: AppStyles.cairo700Size36.copyWith(fontSize: 32.0),
+                    style: AppStyles.cairo700Size36.copyWith(
+                      fontSize: 32.0,
+                    ),
                   ),
                 ),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 100.0)),
+              SliverToBoxAdapter(
+                child: SizedBox(height: 100.0),
+              ),
+
+              
               SliverToBoxAdapter(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Google button pressed!'),
+                      ),
+                    );
+
+                    try {
+                      final userCredential =
+                          await GoogleSignInService()
+                              .signInWithGoogle();
+
+                      if (!context.mounted ||
+                          userCredential == null) {
+                        return;
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Welcome ${userCredential.user?.displayName ?? 'User'}',
+                          ),
+                        ),
+                      );
+                    } on FirebaseAuthException catch (e) {
+                      if (!context.mounted) return;
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            e.message ?? 'Firebase sign-in failed',
+                          ),
+                        ),
+                      );
+                    } on GoogleSignInException catch (e) {
+                      if (!context.mounted) return;
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Google sign-in failed: ${e.code}',
+                          ),
+                        ),
+                      );
+                    } catch (e) {
+                      if (!context.mounted) return;
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Sign-in failed: $e'),
+                        ),
+                      );
+                    }
+                  },
                   child: Container(
                     width: 330.0,
                     height: 60.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
-                      border: BoxBorder.all(color: Colors.grey, width: 2),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 2,
+                      ),
                     ),
                     child: Row(
-                      mainAxisAlignment: .spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Image.asset(AppImages.googleImage),
                         Text(
@@ -60,11 +129,16 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+
+              SliverToBoxAdapter(
+                child: SizedBox(height: 20.0),
+              ),
 
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 100.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 100.0,
+                  ),
                   child: Column(
                     children: [
                       Divider(color: Colors.black),
@@ -80,16 +154,23 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+
+              SliverToBoxAdapter(
+                child: SizedBox(height: 20.0),
+              ),
+
+              // Normal Sign-In Button (not implemented yet)
               SliverToBoxAdapter(
                 child: CustomButton(
-                  onPressed: () {
-
-                  },
+                  onPressed: () {},
                   text: AppStrings.signIn,
                 ),
               ),
-              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+
+              SliverToBoxAdapter(
+                child: SizedBox(height: 20.0),
+              ),
+
               SliverToBoxAdapter(
                 child: Column(
                   children: [
