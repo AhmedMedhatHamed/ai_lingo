@@ -2,6 +2,7 @@ import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
 import 'package:ai_lingo/core/widgets/custom_text_field.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -37,12 +38,46 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             SliverToBoxAdapter(child: SizedBox(height: 40.0)),
-            SliverToBoxAdapter(child: CustomTextField()),
+            SliverToBoxAdapter(
+              child: CustomTextField(
+                controller: TextEditingController(),
+                text: 'Full Name',
+                prefixIcon: Icons.person,
+                validator: (value) {
+                  return '';
+                },
+              ),
+            ),
             SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+            SliverToBoxAdapter(
+              child: CustomTextField(
+                controller: TextEditingController(),
+                text: 'Email Address',
+                prefixIcon: Icons.email_rounded,
+                textInputType: .emailAddress,
+                validator: (value) {
+                  return '';
+                },
+              ),
+            ),
+            SliverToBoxAdapter(child: SizedBox(height: 20.0)),
+            SliverToBoxAdapter(
+              child: CustomTextField(
+                controller: TextEditingController(),
+                text: 'Password',
+                prefixIcon: Icons.lock,
+                suffixIcon: CupertinoIcons.eye,
+                isObscureText: true,
+                textInputType: .visiblePassword,
+                textInputAction: .go,
+                validator: (value) {
+                  return '';
+                },
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
