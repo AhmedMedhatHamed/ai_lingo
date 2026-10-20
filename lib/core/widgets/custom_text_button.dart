@@ -7,19 +7,23 @@ class CustomTextButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.textStyle,
   });
   final String text;
   final void Function() onPressed;
+  final TextStyle? textStyle;
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
       child: Text(
         text,
-        style: AppStyles.cairo700Size36.copyWith(
-          fontSize: 32.0,
-          color: AppColors.secondaryColor,
-        ),
+        style:
+            textStyle ??
+            AppStyles.cairo700Size36.copyWith(
+              fontSize: 32.0,
+              color: AppColors.secondaryColor,
+            ),
       ),
     );
   }

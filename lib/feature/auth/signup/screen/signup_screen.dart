@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/feature/auth/signup/widgets/already_have_account_widget.dart';
 import 'package:ai_lingo/feature/auth/signup/widgets/signup_form.dart';
 import 'package:ai_lingo/feature/auth/signup/widgets/title_and_description.dart';
@@ -15,7 +16,12 @@ class SignupScreen extends StatelessWidget {
           slivers: [
             const SliverAppBar(automaticallyImplyLeading: true),
             const SliverToBoxAdapter(child: SizedBox(height: 30.0)),
-            SliverToBoxAdapter(child: TitleAndDescriptionWidget(),),
+            SliverToBoxAdapter(
+              child: TitleAndDescriptionWidget(
+                title: AppStrings.createAccount,
+                description: AppStrings.signUpDescription,
+              ),
+            ),
             const SliverToBoxAdapter(child: SizedBox(height: 40.0)),
             SliverToBoxAdapter(child: SignupForm()),
             const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
@@ -26,5 +32,3 @@ class SignupScreen extends StatelessWidget {
     );
   }
 }
-
-

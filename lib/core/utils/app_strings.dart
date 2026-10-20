@@ -15,9 +15,12 @@ class AppStrings {
   static const String doNotHaveAnAccount = 'Don’t have an account';
   static const String createAccount = 'Create Account';
   static const String signUpDescription = 'Join AI-Lingo and start speaking today!';
+  static const String signInTitle = 'Welcome Back';
+  static const String signInDesc = "Glad to see you again! Let's practice speaking";
   static const String signUp = 'Sign Up';
   static const String alreadyHaveAnAccount = 'Already have an account?';
   static const String logIn = 'Log In';
+  static const String forgotPassword = 'Forgot Password';
   static const String completeYourProfile = 'Complete Your Profile';
   static const String setupDescription = 'Choose your level and interests to get\n a personalized experience.';
   static const String languageLevel = 'Language Level';
