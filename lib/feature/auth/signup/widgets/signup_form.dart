@@ -52,7 +52,7 @@ class SignupForm extends StatelessWidget {
               CustomTextField(
                 controller: cubit.passwordController,
                 text: 'Password',
-                prefixIcon: Icons.lock,
+                prefixIcon: CupertinoIcons.lock_fill,
                 suffixIcon: cubit.isObscure
                     ? CupertinoIcons.eye_slash_fill
                     : CupertinoIcons.eye,
