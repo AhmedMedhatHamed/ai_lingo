@@ -39,10 +39,10 @@
               "client_type": 3
             },
             {
-              "client_id": "181527851214-p1voitg0nh2cn0ks0rkfs23jghonb5i9.apps.googleusercontent.com",
+              "client_id": "181527851214-ijf5qmu6soj2na705hs2gkv2rjdvkt91.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.newProject"
+                "bundle_id": "com.example.aiLingo"
               }
             }
           ]
@@ -83,10 +83,10 @@
               "client_type": 3
             },
             {
-              "client_id": "181527851214-p1voitg0nh2cn0ks0rkfs23jghonb5i9.apps.googleusercontent.com",
+              "client_id": "181527851214-ijf5qmu6soj2na705hs2gkv2rjdvkt91.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.newProject"
+                "bundle_id": "com.example.aiLingo"
               }
             }
           ]

@@ -1,4 +1,3 @@
-
 import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_images.dart';
@@ -64,7 +63,7 @@ class LoginScreen extends StatelessWidget {
 
                       if (!context.mounted ||
                           userCredential == null) {
-                        return;
+                        return ;
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(
