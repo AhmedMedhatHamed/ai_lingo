@@ -63,7 +63,7 @@ class SignInForm extends StatelessWidget {
                     : CustomButton(
                   onPressed: () {
                     FocusScope.of(context).unfocus();
-                    cubit.signUp();
+                    cubit.signIn();
                   },
                   text: AppStrings.signIn,
                 ),
