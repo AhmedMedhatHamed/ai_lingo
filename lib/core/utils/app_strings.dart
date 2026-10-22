@@ -46,4 +46,8 @@ class AppStrings {
   static const String password = 'Password';
   static const String fullName = 'Full Name';
   static const String sendLinkReset = 'Send Reset Link';
+  static const String createNewPassword = 'Create New Password';
+  static const String createNewPasswordDesc =
+      'Your new password must be unique and different from previously used passwords.';
+  static const String resetPassword = 'Reset Password';
 }

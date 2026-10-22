@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/services/validator.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
@@ -39,6 +40,7 @@ class ForgotPasswordForm extends StatelessWidget {
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                     context.read<AuthCubit>().forgotPassword();
+                    Navigator.pushNamed(context, AppRoutes.newPasswordScreen);
                   },
                   text: AppStrings.sendLinkReset,
                 ),

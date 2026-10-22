@@ -1,5 +1,6 @@
 import 'package:ai_lingo/feature/auth/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/forgot_password_screen.dart';
+import 'package:ai_lingo/feature/auth/forgot_password/screen/new_password_screen.dart';
 import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
 import 'package:ai_lingo/feature/auth/sign_in/screen/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/screen/signup_screen.dart';
@@ -35,7 +36,11 @@ class AppRouter {
           builder: (_) =>
               BlocProvider(create: (_) => AuthCubit(), child: ForgotPasswordScreen()),
         );
-
+      case AppRoutes.newPasswordScreen:
+        return MaterialPageRoute(
+          builder: (_) =>
+              BlocProvider(create: (_) => AuthCubit(), child: NewPasswordScreen()),
+        );
       case 'onboardingScreen':
         return PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 600),
