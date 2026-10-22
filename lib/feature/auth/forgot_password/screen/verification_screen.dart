@@ -39,10 +39,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
               const SizedBox(height: 12.0),
               const Text(
-                'Please enter the the 4-digit code sent to your email',
+                'Please enter the 4-digit code sent to your email',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16.0, color: Color(0xFF304A73)),
               ),
+              const SizedBox(height: 8.0),
+              const Text(
+                " example@email.com ",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 16.0, color: Color(0xFF304A73),
+                    fontWeight: FontWeight.bold),
+                ),
               const SizedBox(height: 35),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,6 +87,46 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         ),
                       ),
                     ),
+                  ),
+                ),
+
+              ),
+              const SizedBox(height:24.0),
+              Text(
+                'Didn\'t receive the code?',
+                style: TextStyle(
+                  fontSize: 28.0,
+                  color: Color(0xFF304A73),
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                '(00:45)',
+                style: TextStyle(
+                  fontSize: 28.0,
+                  color: Color.fromARGB(255, 223, 48, 156),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 80.0),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.newPasswordScreen);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF3B82F6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 100.0,
+                      vertical: 16.0,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                  ),
+                  child: const Text(
+                    'Continue',
+                    style: TextStyle(fontSize: 18.0, color: Colors.white),
                   ),
                 ),
               ),
