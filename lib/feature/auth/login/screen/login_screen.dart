@@ -21,9 +21,7 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 40.0),
           child: CustomScrollView(
             slivers: [
-              SliverToBoxAdapter(
-                child: SizedBox(height: 20.0),
-              ),
+              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
               SliverToBoxAdapter(
                 child: Image.asset(
                   AppImages.appLogo,
@@ -35,35 +33,25 @@ class LoginScreen extends StatelessWidget {
                 child: Center(
                   child: Text(
                     AppStrings.appName,
-                    style: AppStyles.cairo700Size36.copyWith(
-                      fontSize: 32.0,
-                    ),
+                    style: AppStyles.cairo700Size36.copyWith(fontSize: 32.0),
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(height: 100.0),
-              ),
-
-              
+              SliverToBoxAdapter(child: SizedBox(height: 100.0)),
+              ///google signIn///
               SliverToBoxAdapter(
                 child: GestureDetector(
                   onTap: () async {
-                    
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Google button pressed!'),
-                      ),
+                      const SnackBar(content: Text('Google button pressed!')),
                     );
 
                     try {
-                      final userCredential =
-                          await GoogleSignInService()
-                              .signInWithGoogle();
+                      final userCredential = await GoogleSignInService()
+                          .signInWithGoogle();
 
-                      if (!context.mounted ||
-                          userCredential == null) {
-                        return ;
+                      if (!context.mounted || userCredential == null) {
+                        return;
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -78,9 +66,7 @@ class LoginScreen extends StatelessWidget {
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(
-                            e.message ?? 'Firebase sign-in failed',
-                          ),
+                          content: Text(e.message ?? 'Firebase sign-in failed'),
                         ),
                       );
                     } on GoogleSignInException catch (e) {
@@ -88,18 +74,14 @@ class LoginScreen extends StatelessWidget {
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(
-                            'Google sign-in failed: ${e.code}',
-                          ),
+                          content: Text('Google sign-in failed: ${e.code}'),
                         ),
                       );
                     } catch (e) {
                       if (!context.mounted) return;
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Sign-in failed: $e'),
-                        ),
+                        SnackBar(content: Text('Sign-in failed: $e')),
                       );
                     }
                   },
@@ -108,10 +90,7 @@ class LoginScreen extends StatelessWidget {
                     height: 60.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 2,
-                      ),
+                      border: Border.all(color: Colors.grey, width: 2),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -128,16 +107,10 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              SliverToBoxAdapter(
-                child: SizedBox(height: 20.0),
-              ),
-
+              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 100.0,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 100.0),
                   child: Column(
                     children: [
                       Divider(color: Colors.black),
@@ -153,23 +126,19 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              SliverToBoxAdapter(
-                child: SizedBox(height: 20.0),
-              ),
-
-              // Normal Sign-In Button (not implemented yet)
+              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
               SliverToBoxAdapter(
                 child: CustomButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppRoutes.signInScreen,
+                    );
+                  },
                   text: AppStrings.signIn,
                 ),
               ),
-
-              SliverToBoxAdapter(
-                child: SizedBox(height: 20.0),
-              ),
-
+              SliverToBoxAdapter(child: SizedBox(height: 20.0)),
               SliverToBoxAdapter(
                 child: Column(
                   children: [
@@ -183,10 +152,7 @@ class LoginScreen extends StatelessWidget {
                     CustomTextButton(
                       text: AppStrings.createAccount,
                       onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.signupScreen,
-                        );
+                        Navigator.pushNamed(context, AppRoutes.signupScreen);
                       },
                     ),
                   ],

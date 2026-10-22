@@ -14,7 +14,6 @@ class SignInScreen extends StatelessWidget {
         slivers: [
           SliverAppBar(automaticallyImplyLeading: true),
           SliverToBoxAdapter(child: SizedBox(height: 60.0)),
-
           SliverToBoxAdapter(
             child: TitleAndDescriptionWidget(
               title: AppStrings.signInTitle,

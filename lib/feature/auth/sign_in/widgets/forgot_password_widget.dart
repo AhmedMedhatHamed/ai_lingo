@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
@@ -23,7 +24,9 @@ class ForgotPasswordWidget extends StatelessWidget {
               fontStyle: .italic,
               decoration: .underline,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.forgotPasswordScreen);
+            },
           ),
         ),
       ),
