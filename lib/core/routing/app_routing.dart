@@ -9,7 +9,7 @@ import 'package:ai_lingo/feature/splash/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app_routes.dart';
-
+import 'package:ai_lingo/feature/auth/forgot_password/screen/verification_screen.dart';
 class AppRouter {
   static Route? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -36,6 +36,10 @@ class AppRouter {
           builder: (_) =>
               BlocProvider(create: (_) => AuthCubit(), child: ForgotPasswordScreen()),
         );
+        case AppRoutes.verificationScreen:
+  return MaterialPageRoute(
+    builder: (_) =>  VerificationScreen(),
+  );
       case AppRoutes.newPasswordScreen:
         return MaterialPageRoute(
           builder: (_) =>

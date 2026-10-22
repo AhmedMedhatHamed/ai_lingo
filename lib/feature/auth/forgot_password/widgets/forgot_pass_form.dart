@@ -14,7 +14,7 @@ class ForgotPasswordForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit,AuthState>(
+    return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {},
       builder: (context, state) {
         return Form(
@@ -37,13 +37,16 @@ class ForgotPasswordForm extends StatelessWidget {
                 child: state is AuthLoading
                     ? CupertinoActivityIndicator(color: AppColors.primaryColor)
                     : CustomButton(
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    context.read<AuthCubit>().forgotPassword();
-                    Navigator.pushNamed(context, AppRoutes.newPasswordScreen);
-                  },
-                  text: AppStrings.sendLinkReset,
-                ),
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
+
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.verificationScreen,
+                          );
+                        },
+                        text: AppStrings.sendLinkReset,
+                      ),
               ),
             ],
           ),
