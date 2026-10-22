@@ -35,6 +35,22 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+  Future<void> signIn() async {
+    if (!formKey.currentState!.validate()) {
+      autoValidateMode = AutovalidateMode.always;
+      emit(AuthValidationFailed());
+      return;
+    }
+
+    emit(AuthLoading());
+    try {
+      // TODO: call signIn API
+      emit(AuthSuccess());
+    } catch (e) {
+      emit(AuthFailure(e.toString()));
+    }
+  }
+
   @override
   Future<void> close() {
     nameController.dispose();

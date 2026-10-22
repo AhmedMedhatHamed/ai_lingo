@@ -1,5 +1,6 @@
 import 'package:ai_lingo/core/services/validator.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
+import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/widgets/custom_button.dart';
 import 'package:ai_lingo/core/widgets/custom_text_field.dart';
 import 'package:ai_lingo/feature/auth/cubit/auth_cubit.dart';
@@ -73,7 +74,7 @@ class SignupForm extends StatelessWidget {
                           FocusScope.of(context).unfocus();
                           cubit.signUp();
                         },
-                        text: 'Sign Up',
+                        text: AppStrings.signUp,
                       ),
               ),
               const SizedBox(height: 20.0),
