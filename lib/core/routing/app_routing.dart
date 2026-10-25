@@ -8,6 +8,7 @@ import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
 import 'package:ai_lingo/feature/profile/screen/change_password_screen.dart';
 import 'package:ai_lingo/feature/profile/screen/edit_profile_screen.dart';
 import 'package:ai_lingo/feature/splash/screen/splash_screen.dart';
+import 'package:ai_lingo/feature/vocabulary/screen/vocabulary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app_routes.dart';
@@ -56,7 +57,12 @@ class AppRouter {
 
       case AppRoutes.changePasswordScreen:
         return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
+
+      case AppRoutes.vocabularyScreen:
+        return MaterialPageRoute(builder: (_) => VocabularyScreen());
     }
+
+
     return null;
   }
 }
