@@ -18,7 +18,10 @@ class HomeHeader extends StatelessWidget {
           height: size.width * 0.15,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(width: 2, color: AppColors.splashColor),
+            border: Border.all(
+              width: size.width * 0.005,
+              color: AppColors.primaryColor,
+            ),
           ),
           child: Icon(Icons.person_3, size: 30, color: AppColors.splashColor),
         ),
@@ -35,7 +38,7 @@ class HomeHeader extends StatelessWidget {
                       'Hello',
                       style: AppStyles.cairo400Size24.copyWith(
                         fontSize: 32,
-                        color: Color(0xff304A73),
+                        color: AppColors.splashColor,
                       ),
                     ),
                     Text(

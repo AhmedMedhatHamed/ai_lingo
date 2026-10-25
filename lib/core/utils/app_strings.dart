@@ -57,4 +57,14 @@ class AppStrings {
   static const String myVocabulary = 'My Vocabulary';
   static const String noSavedWordsYet = 'No Saved Words Yet';
   static const String exploreScenarios = 'Explore Scenarios';
+  static const String dailyChallenge = 'Daily Challenge';
+  static const String practice5mins =
+      'Practice 5 mins of real conversation today!';
+  static const String quickAccess = 'Quick Access';
+  static const String history = 'History';
+  static const String progress = 'Progress';
+  static const String popularScenarios = 'Popular Scenarios';
+  static const String orderingCoffee = 'Ordering Coffee';
+  static const String resume = 'Resume';
+  static const String groceryShopping = 'Grocery Shopping';
 }
