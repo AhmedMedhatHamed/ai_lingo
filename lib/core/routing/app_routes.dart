@@ -9,4 +9,6 @@ class AppRoutes {
   static const String editProfileScreen = 'editProfileScreen';
   static const String changePasswordScreen = 'changePasswordScreen';
   static const String mainNavigation = 'mainNavigation';
+  static const String vocabularyScreen = 'vocabularyScreen';
 }
+ 
