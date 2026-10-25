@@ -38,14 +38,11 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(child: SizedBox(height: 100.0)),
+
               ///google signIn///
               SliverToBoxAdapter(
                 child: GestureDetector(
                   onTap: () async {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Google button pressed!')),
-                    );
-
                     try {
                       final userCredential = await GoogleSignInService()
                           .signInWithGoogle();
@@ -54,12 +51,9 @@ class LoginScreen extends StatelessWidget {
                         return;
                       }
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Welcome ${userCredential.user?.displayName ?? 'User'}',
-                          ),
-                        ),
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.profileSetupScreen,
                       );
                     } on FirebaseAuthException catch (e) {
                       if (!context.mounted) return;
