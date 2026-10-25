@@ -5,6 +5,7 @@ import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
 import 'package:ai_lingo/feature/auth/sign_in/screen/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/screen/signup_screen.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
+import 'package:ai_lingo/feature/profile/screen/change_password_screen.dart';
 import 'package:ai_lingo/feature/profile/screen/edit_profile_screen.dart';
 import 'package:ai_lingo/feature/splash/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,9 @@ class AppRouter {
 
       case AppRoutes.editProfileScreen:
         return MaterialPageRoute(builder: (_) => EditProfileScreen());
+
+      case AppRoutes.changePasswordScreen:
+        return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
     }
     return null;
   }

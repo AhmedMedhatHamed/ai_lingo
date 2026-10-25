@@ -7,5 +7,6 @@ class AppRoutes {
   static const String forgotPasswordScreen = 'forgotPasswordScreen';
   static const String newPasswordScreen = 'newPasswordScreen';
   static const String editProfileScreen = 'editProfileScreen';
+  static const String changePasswordScreen = 'changePasswordScreen';
 
 }

@@ -50,4 +50,6 @@ class AppStrings {
   static const String createNewPasswordDesc =
       'Your new password must be unique and different from previously used passwords.';
   static const String resetPassword = 'Reset Password';
+  static const String changePassword = 'Change Password';
+  static const String confirm = 'Confirm';
 }
