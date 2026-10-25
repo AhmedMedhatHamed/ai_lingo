@@ -52,6 +52,8 @@ class AppStrings {
   static const String resetPassword = 'Reset Password';
   static const String changePassword = 'Change Password';
   static const String confirm = 'Confirm';
+  static const String home = 'Home';
+  static const String scenarios = 'Scenarios';
   static const String myVocabulary = 'My Vocabulary';
   static const String noSavedWordsYet = 'No Saved Words Yet';
   static const String exploreScenarios = 'Explore Scenarios';
