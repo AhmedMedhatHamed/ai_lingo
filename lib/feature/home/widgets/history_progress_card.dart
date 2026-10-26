@@ -7,16 +7,18 @@ class HistoryProgressCard extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
+    this.onTap,
   });
 
   final IconData icon;
   final String title;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         width: size.width * 0.44,
         decoration: BoxDecoration(

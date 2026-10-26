@@ -70,4 +70,5 @@ class AppStrings {
   static const String chat = 'Chat';
   static const String vocabulary = 'Vocabulary';
   static const String profile = 'Profile';
+  static const String conversationHistory = 'Conversation History';
 }

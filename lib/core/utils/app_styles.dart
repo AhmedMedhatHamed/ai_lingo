@@ -16,4 +16,15 @@ class AppStyles {
     fontWeight: .w400,
     fontFamily: 'Almarai',
   );
+  static const TextStyle almaraiBoldSize32 = TextStyle(
+    fontSize: 32.0,
+    fontWeight: .bold,
+    fontFamily: 'Almarai',
+  );
+
+  static const TextStyle inter400Size11 = TextStyle(
+    fontSize: 11.0,
+    fontWeight: .w400,
+    fontFamily: 'Inter',
+  );
 }

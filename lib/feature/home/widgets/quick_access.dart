@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
@@ -24,10 +25,20 @@ class QuickAccess extends StatelessWidget {
         Row(
           mainAxisAlignment: .spaceBetween,
           children: [
-            HistoryProgressCard(icon: Icons.history, title: AppStrings.history),
+            HistoryProgressCard(
+              icon: Icons.history,
+              title: AppStrings.history,
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  AppRoutes.conversationHistoryScreen,
+                );
+              },
+            ),
             HistoryProgressCard(
               icon: Icons.trending_up,
               title: AppStrings.progress,
+              onTap: () {},
             ),
           ],
         ),
