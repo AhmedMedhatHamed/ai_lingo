@@ -20,36 +20,57 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (value) {
-          setState(() {
-            _currentIndex = value;
-          });
-        },
-        selectedIconTheme: IconThemeData(color: AppColors.secondaryColor),
-        unselectedIconTheme: IconThemeData(color: AppColors.primaryColor),
-        selectedLabelStyle: AppStyles.cairo700Size36.copyWith(fontSize: 18),
-        unselectedLabelStyle: AppStyles.cairo700Size36.copyWith(fontSize: 18),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        items: [
-          BottomNavigationBarItem(
-            icon: CustomIcon(isSelected: _currentIndex == 0, icon: Icons.home),
-            label: AppStrings.home,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.height * 0.04),
+            topRight: Radius.circular(size.height * 0.04),
           ),
-          BottomNavigationBarItem(
-            icon: CustomIcon(
-              isSelected: _currentIndex == 1,
-              icon: Icons.theater_comedy,
+          border: Border.all(width: size.height * 0.002, color: Colors.grey),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.height * 0.04),
+            topRight: Radius.circular(size.height * 0.04),
+          ),
+
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            selectedIconTheme: IconThemeData(color: AppColors.secondaryColor),
+            unselectedIconTheme: IconThemeData(color: AppColors.primaryColor),
+            selectedLabelStyle: AppStyles.cairo700Size36.copyWith(fontSize: 18),
+            unselectedLabelStyle: AppStyles.cairo700Size36.copyWith(
+              fontSize: 18,
             ),
-            label: AppStrings.scenarios,
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.black,
+            items: [
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 0,
+                  icon: Icons.home,
+                ),
+                label: AppStrings.home,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 1,
+                  icon: Icons.theater_comedy,
+                ),
+                label: AppStrings.scenarios,
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 }
-
