@@ -1,6 +1,6 @@
-import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/widgets/custom_button.dart';
 import 'package:ai_lingo/core/widgets/custom_text_field.dart';
+import 'package:ai_lingo/feature/profile/widgets/profile_image.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -31,18 +31,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           slivers: [
             SliverAppBar(automaticallyImplyLeading: true),
             SliverToBoxAdapter(
-              child: Container(
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.backgroundColor,
-                  border: BoxBorder.all(
-                    color: AppColors.primaryColor,
-                    width: 4,
-                  ),
-                ),
-                child: Icon(Icons.person, size: 60.0, color: Colors.black),
-              ),
+              child: ProfileImage(),
             ),
             SliverToBoxAdapter(child: SizedBox(height: 60.0)),
             SliverToBoxAdapter(
@@ -73,3 +62,4 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
+
