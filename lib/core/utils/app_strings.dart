@@ -67,4 +67,7 @@ class AppStrings {
   static const String orderingCoffee = 'Ordering Coffee';
   static const String resume = 'Resume';
   static const String groceryShopping = 'Grocery Shopping';
+  static const String chat = 'Chat';
+  static const String vocabulary = 'Vocabulary';
+  static const String profile = 'Profile';
 }

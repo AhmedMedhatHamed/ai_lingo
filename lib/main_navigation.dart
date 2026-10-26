@@ -1,9 +1,13 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/chat/screen/chat_screen.dart';
 import 'package:ai_lingo/feature/home/screen/home_screen.dart';
-import 'package:ai_lingo/feature/main_navigation/widgets/custom_icon.dart';
+import 'package:ai_lingo/core/widgets/custom_icon.dart';
+import 'package:ai_lingo/feature/profile/profile_screen.dart';
 import 'package:ai_lingo/feature/scenarios/screen/scenarios_screen.dart';
+import 'package:ai_lingo/feature/vocabulary/screen/vocabulary_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainNavigation extends StatefulWidget {
@@ -14,7 +18,13 @@ class MainNavigation extends StatefulWidget {
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-  final _screens = [HomeScreen(), ScenariosScreen()];
+  final _screens = [
+    HomeScreen(),
+    ScenariosScreen(),
+    ChatScreen(),
+    VocabularyScreen(),
+    ProfileScreen(),
+  ];
 
   int _currentIndex = 0;
 
@@ -66,6 +76,27 @@ class _MainNavigationState extends State<MainNavigation> {
                   icon: Icons.theater_comedy,
                 ),
                 label: AppStrings.scenarios,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 2,
+                  icon: Icons.wechat_outlined,
+                ),
+                label: AppStrings.chat,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 3,
+                  icon: CupertinoIcons.doc_fill,
+                ),
+                label: AppStrings.vocabulary,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 4,
+                  icon: Icons.person,
+                ),
+                label: AppStrings.profile,
               ),
             ],
           ),

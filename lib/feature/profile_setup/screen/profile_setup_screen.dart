@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
