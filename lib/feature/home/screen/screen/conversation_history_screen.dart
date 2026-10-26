@@ -20,9 +20,8 @@ class ConversationHistoryScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // 1. أول حاجة Text العنوان
-              const Center(
+            children: const [
+              Center(
                 child: Text(
                   'Conversation History',
                   style: TextStyle(
@@ -32,33 +31,29 @@ class ConversationHistoryScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
-              // 2. الكونتينرات الخاصة بالعناصر
-              _buildHistoryCard(
+              HistoryCardItem(
                 icon: Icons.coffee,
                 iconColor: Colors.purple,
                 title: 'Ordering Coffee',
                 time: 'Today 10:24 AM',
-                onTap: () {},
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
 
-              _buildHistoryCard(
+              HistoryCardItem(
                 icon: Icons.flight,
                 iconColor: Colors.purple,
                 title: 'Airport Check-in',
                 time: 'Yesterday 04:12 PM',
-                onTap: () {},
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
 
-              _buildHistoryCard(
+              HistoryCardItem(
                 icon: Icons.work_outline,
                 iconColor: Colors.purple,
                 title: 'Job Interview',
                 time: 'Yesterday 11:03 AM',
-                onTap: () {},
               ),
             ],
           ),
@@ -66,15 +61,26 @@ class ConversationHistoryScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  // ودجت الكونتينر لكل عنصر في الهيستوري
-  Widget _buildHistoryCard({
-    required IconData icon,
-    required Color iconColor,
-    required String title,
-    required String time,
-    required VoidCallback onTap,
-  }) {
+class HistoryCardItem extends StatelessWidget {
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final String time;
+  final VoidCallback? onTap;
+
+  const HistoryCardItem({
+    super.key,
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.time,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
