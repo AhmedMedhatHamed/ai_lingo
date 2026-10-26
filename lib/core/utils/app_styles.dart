@@ -16,4 +16,9 @@ class AppStyles {
     fontWeight: .w400,
     fontFamily: 'Almarai',
   );
+  static const TextStyle inter400Size11 = TextStyle(
+    fontSize: 11.0,
+    fontWeight: .w400,
+    fontFamily: 'Inter',
+  );
 }
