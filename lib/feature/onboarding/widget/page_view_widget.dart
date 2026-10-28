@@ -7,6 +7,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'build_show_dialog.dart';
 
+
 class PageViewWidget extends StatefulWidget {
   const PageViewWidget({super.key});
 

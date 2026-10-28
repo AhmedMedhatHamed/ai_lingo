@@ -1,12 +1,14 @@
 import 'package:ai_lingo/feature/auth/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/forgot_password_screen.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/new_password_screen.dart';
+import 'package:ai_lingo/feature/auth/forgot_password/screen/verification_screen.dart';
 import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
 import 'package:ai_lingo/feature/auth/sign_in/screen/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/screen/signup_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.dart';
 import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
+import 'package:ai_lingo/feature/profile_setup/screen/profile_setup_screen.dart';
 import 'package:ai_lingo/feature/profile/screen/change_password_screen.dart';
 import 'package:ai_lingo/feature/profile/screen/edit_profile_screen.dart';
 import 'package:ai_lingo/feature/splash/screen/splash_screen.dart';
@@ -43,6 +45,8 @@ class AppRouter {
             child: ForgotPasswordScreen(),
           ),
         );
+      case AppRoutes.verificationScreen:
+        return MaterialPageRoute(builder: (_) => const VerificationScreen());
       case AppRoutes.newPasswordScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
@@ -50,6 +54,9 @@ class AppRouter {
             child: NewPasswordScreen(),
           ),
         );
+
+      case AppRoutes.profileSetupScreen:
+        return MaterialPageRoute(builder: (_) => const ProfileSetupScreen());
       case 'onboardingScreen':
         return PageRouteBuilder(
           transitionDuration: const Duration(milliseconds: 600),
