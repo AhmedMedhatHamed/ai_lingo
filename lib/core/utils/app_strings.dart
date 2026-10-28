@@ -50,4 +50,25 @@ class AppStrings {
   static const String createNewPasswordDesc =
       'Your new password must be unique and different from previously used passwords.';
   static const String resetPassword = 'Reset Password';
+  static const String changePassword = 'Change Password';
+  static const String confirm = 'Confirm';
+  static const String home = 'Home';
+  static const String scenarios = 'Scenarios';
+  static const String myVocabulary = 'My Vocabulary';
+  static const String noSavedWordsYet = 'No Saved Words Yet';
+  static const String exploreScenarios = 'Explore Scenarios';
+  static const String dailyChallenge = 'Daily Challenge';
+  static const String practice5mins =
+      'Practice 5 mins of real conversation today!';
+  static const String quickAccess = 'Quick Access';
+  static const String history = 'History';
+  static const String progress = 'Progress';
+  static const String popularScenarios = 'Popular Scenarios';
+  static const String orderingCoffee = 'Ordering Coffee';
+  static const String resume = 'Resume';
+  static const String groceryShopping = 'Grocery Shopping';
+  static const String chat = 'Chat';
+  static const String vocabulary = 'Vocabulary';
+  static const String profile = 'Profile';
+  static const String conversationHistory = 'Conversation History';
 }

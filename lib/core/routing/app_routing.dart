@@ -5,9 +5,14 @@ import 'package:ai_lingo/feature/auth/forgot_password/screen/verification_screen
 import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
 import 'package:ai_lingo/feature/auth/sign_in/screen/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/screen/signup_screen.dart';
+import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.dart';
+import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
 import 'package:ai_lingo/feature/profile_setup/screen/profile_setup_screen.dart';
+import 'package:ai_lingo/feature/profile/screen/change_password_screen.dart';
+import 'package:ai_lingo/feature/profile/screen/edit_profile_screen.dart';
 import 'package:ai_lingo/feature/splash/screen/splash_screen.dart';
+import 'package:ai_lingo/feature/vocabulary/screen/vocabulary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app_routes.dart';
@@ -59,7 +64,24 @@ class AppRouter {
           transitionsBuilder: (_, animation, _, child) =>
               FadeTransition(opacity: animation, child: child),
         );
+
+      case AppRoutes.editProfileScreen:
+        return MaterialPageRoute(builder: (_) => EditProfileScreen());
+
+      case AppRoutes.changePasswordScreen:
+        return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
+
+      case AppRoutes.mainNavigation:
+        return MaterialPageRoute(builder: (_) => MainNavigation());
+
+      case AppRoutes.vocabularyScreen:
+        return MaterialPageRoute(builder: (_) => VocabularyScreen());
+
+      case AppRoutes.conversationHistoryScreen:
+        return MaterialPageRoute(builder: (_) => ConversationHistoryScreen());
+
     }
+
     return null;
   }
 }

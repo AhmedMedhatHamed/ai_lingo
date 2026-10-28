@@ -1,0 +1,107 @@
+import 'package:ai_lingo/core/utils/app_colors.dart';
+import 'package:ai_lingo/core/utils/app_strings.dart';
+import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/chat/screen/chat_screen.dart';
+import 'package:ai_lingo/feature/home/screen/home_screen.dart';
+import 'package:ai_lingo/core/widgets/custom_icon.dart';
+import 'package:ai_lingo/feature/profile/profile_screen.dart';
+import 'package:ai_lingo/feature/scenarios/screen/scenarios_screen.dart';
+import 'package:ai_lingo/feature/vocabulary/screen/vocabulary_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class MainNavigation extends StatefulWidget {
+  const MainNavigation({super.key});
+
+  @override
+  State<MainNavigation> createState() => _MainNavigationState();
+}
+
+class _MainNavigationState extends State<MainNavigation> {
+  final _screens = [
+    HomeScreen(),
+    ScenariosScreen(),
+    ChatScreen(),
+    VocabularyScreen(),
+    ProfileScreen(),
+  ];
+
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: _screens[_currentIndex],
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.height * 0.04),
+            topRight: Radius.circular(size.height * 0.04),
+          ),
+          border: Border.all(width: size.height * 0.002, color: Colors.grey),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(size.height * 0.04),
+            topRight: Radius.circular(size.height * 0.04),
+          ),
+
+          child: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            onTap: (value) {
+              setState(() {
+                _currentIndex = value;
+              });
+            },
+            selectedIconTheme: IconThemeData(color: AppColors.secondaryColor),
+            unselectedIconTheme: IconThemeData(color: AppColors.primaryColor),
+            selectedLabelStyle: AppStyles.cairo700Size36.copyWith(fontSize: 18),
+            unselectedLabelStyle: AppStyles.cairo700Size36.copyWith(
+              fontSize: 18,
+            ),
+            selectedItemColor: Colors.black,
+            unselectedItemColor: Colors.black,
+            items: [
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 0,
+                  icon: Icons.home,
+                ),
+                label: AppStrings.home,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 1,
+                  icon: Icons.theater_comedy,
+                ),
+                label: AppStrings.scenarios,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 2,
+                  icon: Icons.wechat_outlined,
+                ),
+                label: AppStrings.chat,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 3,
+                  icon: CupertinoIcons.doc_fill,
+                ),
+                label: AppStrings.vocabulary,
+              ),
+              BottomNavigationBarItem(
+                icon: CustomIcon(
+                  isSelected: _currentIndex == 4,
+                  icon: Icons.person,
+                ),
+                label: AppStrings.profile,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
