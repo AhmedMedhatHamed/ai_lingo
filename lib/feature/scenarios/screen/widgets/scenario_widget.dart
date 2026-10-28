@@ -3,6 +3,8 @@ import 'package:ai_lingo/core/utils/app_styles.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:flutter/material.dart';
 
+import '../../../ai_tutor/screens/ordering_coffee_screen.dart';
+
 enum Level { beginner, intermediate, advanced }
 
 class ScenarioWidget extends StatelessWidget {
@@ -45,8 +47,20 @@ class ScenarioWidget extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.arrow_forward_ios, size: size.height * 0.05),
+            onPressed: () {
+              if (scenario.title == 'Ordering Coffee') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const OrderingCoffeeScreen(),
+                  ),
+                );
+              }
+            },
+            icon: Icon(
+              Icons.arrow_forward_ios,
+              size: size.height * 0.05,
+            ),
           ),
         ],
       ),
