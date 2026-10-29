@@ -71,4 +71,7 @@ class AppStrings {
   static const String vocabulary = 'Vocabulary';
   static const String profile = 'Profile';
   static const String conversationHistory = 'Conversation History';
+  static const String yourProgress = 'Your Progress';
+  static const String savedWords = 'Saved Words';
+  static const String completedConversations = 'Completed Conversations';
 }

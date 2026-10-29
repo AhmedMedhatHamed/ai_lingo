@@ -38,7 +38,9 @@ class QuickAccess extends StatelessWidget {
             HistoryProgressCard(
               icon: Icons.trending_up,
               title: AppStrings.progress,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.progressScreen);
+              },
             ),
           ],
         ),

@@ -27,7 +27,7 @@ class ProgressStatCard extends StatelessWidget {
         horizontal: size.width * 0.04,
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.backgroundColor,
         borderRadius: BorderRadius.circular(size.height * 0.015),
         border: Border.all(
           color: Colors.grey.shade300,
@@ -44,7 +44,7 @@ class ProgressStatCard extends StatelessWidget {
               Text(
                 title,
                 style: AppStyles.inter400Size11.copyWith(
-                  fontSize: 15,
+                  fontSize: 15.0,
                   fontWeight: FontWeight.w600,
                   color: Colors.black87,
                 ),
@@ -54,10 +54,8 @@ class ProgressStatCard extends StatelessWidget {
           SizedBox(height: size.height * 0.01),
           Text(
             value,
-            style: AppStyles.cairo700Size36.copyWith(
-              fontSize: 24,
+            style: AppStyles.cairo400Size24.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
             ),
           ),
         ],

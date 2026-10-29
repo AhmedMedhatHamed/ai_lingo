@@ -1,6 +1,7 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
+import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
-import 'package:ai_lingo/feature/profile/screen/widgets/progress_stat_card.dart';
+import 'package:ai_lingo/feature/home/widgets/progress_stat_card.dart';
 import 'package:flutter/material.dart';
 
 class ProgressScreen extends StatelessWidget {
@@ -11,14 +12,9 @@ class ProgressScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
+        backgroundColor: AppColors.backgroundColor,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -29,11 +25,9 @@ class ProgressScreen extends StatelessWidget {
               children: [
                 SizedBox(height: size.height * 0.01),
                 Text(
-                  'Your Progress',
-                  style: AppStyles.cairo700Size36.copyWith(
-                    fontSize: 24,
+                  AppStrings.yourProgress,
+                  style: AppStyles.cairo400Size24.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
                   ),
                 ),
                 SizedBox(height: size.height * 0.04),
@@ -69,7 +63,7 @@ class ProgressScreen extends StatelessWidget {
                 Text(
                   'Level 1 - Beginner',
                   style: AppStyles.inter400Size11.copyWith(
-                    fontSize: 14,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.w600,
                     color: AppColors.secondaryColor,
                   ),
@@ -77,18 +71,18 @@ class ProgressScreen extends StatelessWidget {
                 SizedBox(height: size.height * 0.04),
 
                 // الكروت المستقلة
-                const ProgressStatCard(
+                 ProgressStatCard(
                   icon: Icons.bookmark_border,
                   iconColor: AppColors.primaryColor,
-                  title: 'Saved Words',
+                  title: AppStrings.savedWords,
                   value: '12',
                 ),
                 SizedBox(height: size.height * 0.02),
 
-                const ProgressStatCard(
+                 ProgressStatCard(
                   icon: Icons.smart_toy_outlined,
                   iconColor: AppColors.secondaryColor,
-                  title: 'Completed Conversations',
+                  title: AppStrings.completedConversations,
                   value: '4',
                 ),
                 SizedBox(height: size.height * 0.02),

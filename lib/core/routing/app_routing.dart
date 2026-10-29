@@ -6,6 +6,7 @@ import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
 import 'package:ai_lingo/feature/auth/sign_in/screen/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/screen/signup_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.dart';
+import 'package:ai_lingo/feature/home/screen/screen/progress_screen.dart';
 import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
 import 'package:ai_lingo/feature/profile_setup/screen/profile_setup_screen.dart';
@@ -79,6 +80,9 @@ class AppRouter {
 
       case AppRoutes.conversationHistoryScreen:
         return MaterialPageRoute(builder: (_) => ConversationHistoryScreen());
+
+      case AppRoutes.progressScreen:
+        return MaterialPageRoute(builder: (_) => ProgressScreen());
 
     }
 
