@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/services/validator.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
@@ -63,6 +64,7 @@ class SignInForm extends StatelessWidget {
                     : CustomButton(
                   onPressed: () {
                     FocusScope.of(context).unfocus();
+                    Navigator.pushNamed(context, AppRoutes.mainNavigation);
                     cubit.signIn();
                   },
                   text: AppStrings.signIn,

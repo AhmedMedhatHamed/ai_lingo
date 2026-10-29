@@ -2,8 +2,7 @@ import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:flutter/material.dart';
-
-import '../../../ai_tutor/screens/ordering_coffee_screen.dart';
+import '../../../chat/ai_tutor/screens/ordering_coffee_screen.dart';
 
 enum Level { beginner, intermediate, advanced }
 
@@ -17,7 +16,7 @@ class ScenarioWidget extends StatelessWidget {
       case Level.beginner:
         return AppColors.beginnerColor;
       case Level.intermediate:
-        return AppColors.inermediateColor;
+        return AppColors.intermediateColor;
       case Level.advanced:
         return AppColors.secondaryColor;
     }

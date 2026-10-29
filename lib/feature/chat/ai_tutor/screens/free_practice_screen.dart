@@ -1,4 +1,5 @@
 
+import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class FreePracticeScreen extends StatefulWidget {
@@ -9,8 +10,6 @@ class FreePracticeScreen extends StatefulWidget {
 }
 
 class _FreePracticeScreenState extends State<FreePracticeScreen> {
-  static const Color primaryColor = Color(0xFF1D4ED8);
-  static const Color pageColor = Color(0xFFF8FAFC);
 
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
@@ -65,63 +64,59 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: pageColor,
+      backgroundColor: AppColors.chatPageColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.backgroundColor,
+        surfaceTintColor: AppColors.backgroundColor,
         elevation: 0,
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).maybePop(),
-          icon: const Icon(
-            Icons.arrow_back_ios_new,
-            size: 20,
-            color: Color(0xFF1E293B),
-          ),
-        ),
         titleSpacing: 0,
-        title: const Row(
-          children: [
-            CircleAvatar(
-              radius: 21,
-              backgroundColor: Color(0xFFE8EEFF),
-              child: Icon(
-                Icons.smart_toy_outlined,
-                color: primaryColor,
-                size: 25,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 21,
+                backgroundColor: const Color(0xFFE8EEFF),
+                child: Icon(
+                  Icons.smart_toy_outlined,
+                  color: AppColors.primaryColor,
+                  size: 25,
+                ),
               ),
-            ),
-            SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'AI Tutor',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF172033),
+              const SizedBox(width: 10),
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'AI Tutor',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF172033),
+                    ),
                   ),
-                ),
-                SizedBox(height: 3),
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 4,
-                      backgroundColor: Color(0xFF22C55E),
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      'Online',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF64748B),
+                  SizedBox(height: 3),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 4,
+                        backgroundColor: Color(0xFF22C55E),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                      SizedBox(width: 5),
+                      Text(
+                        'Online',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF64748B),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
@@ -147,7 +142,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                 children: [
                   Icon(
                     Icons.forum_outlined,
-                    color: primaryColor,
+                    color: AppColors.primaryColor,
                     size: 20,
                   ),
                   SizedBox(width: 8),
@@ -219,12 +214,12 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                         avatar: const Icon(
                           Icons.auto_awesome,
                           size: 16,
-                          color: primaryColor,
+                          color: AppColors.primaryColor,
                         ),
                         label: Text(
                           suggestion,
                           style: const TextStyle(
-                            color: primaryColor,
+                            color: AppColors.primaryColor,
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
                           ),
@@ -279,7 +274,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                   ),
                   const SizedBox(width: 8),
                   Material(
-                    color: primaryColor,
+                    color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(24),
                     child: InkWell(
                       onTap: _sendMessage,

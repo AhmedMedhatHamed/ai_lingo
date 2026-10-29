@@ -11,7 +11,7 @@ class AiLingoApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: AppStrings.appName,
-      initialRoute: AppRoutes.mainNavigation,
+      initialRoute: AppRoutes.splashScreen,
       onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
