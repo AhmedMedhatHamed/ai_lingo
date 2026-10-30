@@ -93,7 +93,7 @@ class _MyVocabularyScreenState extends State<MyVocabularyScreen> {
     return 8;
   }
 
-  bool isEmpty = true;
+  bool isEmpty = false;
 
   @override
   Widget build(BuildContext context) {

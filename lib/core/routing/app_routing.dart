@@ -1,7 +1,7 @@
 import 'package:ai_lingo/feature/auth/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/forgot_password_screen.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/new_password_screen.dart';
-import 'package:ai_lingo/feature/auth/forgot_password/screen/verification_screen.dart';
+import 'package:ai_lingo/feature/auth/verification/verification_screen.dart';
 import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
 import 'package:ai_lingo/feature/auth/sign_in/screen/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/screen/signup_screen.dart';

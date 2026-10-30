@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/services/validator.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
@@ -73,6 +74,7 @@ class SignupForm extends StatelessWidget {
                         onPressed: () {
                           FocusScope.of(context).unfocus();
                           cubit.signUp();
+                          Navigator.pushReplacementNamed(context, AppRoutes.verificationScreen);
                         },
                         text: AppStrings.signUp,
                       ),

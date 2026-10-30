@@ -1,6 +1,6 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
-import 'package:flutter/material.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
@@ -129,7 +129,9 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 width: double.infinity,
                 height: 49,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, AppRoutes.mainNavigation);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,
                     foregroundColor: Colors.white,

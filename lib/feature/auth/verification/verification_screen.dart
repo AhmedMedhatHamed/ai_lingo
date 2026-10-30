@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_lingo/core/routing/app_routes.dart';
 
@@ -31,8 +32,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(height: 30.0),
-                const Text(
-                  ' Verification Code ',
+                 Text(
+                  'Verification Code',
                   style: TextStyle(
                     fontSize: 28.0,
                     color: Color(0xFF1E293B),
@@ -113,7 +114,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRoutes.newPasswordScreen);
+                      Navigator.pushNamed(context, AppRoutes.profileSetupScreen);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF3B82F6),
@@ -125,9 +126,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Continue',
-                      style: TextStyle(fontSize: 18.0, color: Colors.white),
+                      style: TextStyle(fontSize: 18.0, color: AppColors.backgroundColor),
                     ),
                   ),
                 ),

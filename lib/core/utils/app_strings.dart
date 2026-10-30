@@ -25,6 +25,7 @@ class AppStrings {
   static const String signUp = 'Sign Up';
   static const String alreadyHaveAnAccount = 'Already have an account?';
   static const String logIn = 'Log In';
+  static const String logOut = 'Log Out';
   static const String forgotPassword = 'Forgot Password';
   static const String forgotPassDescription =
       "Don't worry! Enter your registered email address and we'll send you a link to reset your password.";
@@ -74,4 +75,6 @@ class AppStrings {
   static const String yourProgress = 'Your Progress';
   static const String savedWords = 'Saved Words';
   static const String completedConversations = 'Completed Conversations';
+  static const String settings = 'Settings';
+  static const String notifications = 'Notifications';
 }

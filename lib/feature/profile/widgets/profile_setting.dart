@@ -1,5 +1,6 @@
 import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/profile/widgets/show_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_strings.dart';
@@ -18,7 +19,7 @@ class ProfileSetting extends StatelessWidget {
             Icon(Icons.settings),
             SizedBox(width: 5.0),
             Text(
-              'Settings',
+              AppStrings.settings,
               style: AppStyles.almarai400Size24.copyWith(
                 color: AppColors.splashColor,
                 fontSize: 20.0,
@@ -29,7 +30,7 @@ class ProfileSetting extends StatelessWidget {
         SizedBox(height: 5.0),
         CustomListTile(
           icon: Icons.notifications,
-          text: 'Notifications',
+          text: AppStrings.notifications,
           trailing: Switch(
             value: true,
             onChanged: (value) {},
@@ -39,28 +40,51 @@ class ProfileSetting extends StatelessWidget {
         CustomListTile(
           icon: Icons.lock,
           text: AppStrings.changePassword,
-          trailing: Icon(Icons.arrow_forward_ios,),
-          onTap: (){
+          trailing: Icon(Icons.arrow_forward_ios),
+          onTap: () {
             Navigator.pushNamed(context, AppRoutes.changePasswordScreen);
           },
         ),
         CustomListTile(
           icon: Icons.help,
           text: 'Help & Support',
-          trailing: Icon(Icons.arrow_forward_ios,),
-          onTap: (){},
+          trailing: Icon(Icons.arrow_forward_ios),
+          onTap: () {},
         ),
         CustomListTile(
           icon: Icons.logout,
-          text: ' Logout ',
-          trailing: Icon(Icons.arrow_forward_ios,),
-          onTap: (){},
+          text: 'Logout',
+          trailing: Icon(Icons.arrow_forward_ios),
+
+          onTap: () {
+            showWarningDialog(
+              context,
+              text: 'Are you sure you want to Log Out',
+              action: AppStrings.logOut,
+              buttonColor: AppColors.primaryColor,
+              onPressed: () {
+                ///logout logic
+                Navigator.pushReplacementNamed(context, AppRoutes.signInScreen);
+              },
+            );
+          },
         ),
         CustomListTile(
           icon: Icons.cancel,
           text: 'Delete Account',
-          trailing: Icon(Icons.arrow_forward_ios,),
-          onTap: (){},
+          trailing: Icon(Icons.arrow_forward_ios),
+          onTap: () {
+            showWarningDialog(
+              context,
+              text: 'Are uou sure you want to Delete this Account',
+              action: 'Delete Account',
+              buttonColor: AppColors.secondaryColor,
+              onPressed: () {
+                ///Delete Logic
+                Navigator.pushReplacementNamed(context, AppRoutes.signupScreen);
+              },
+            );
+          },
         ),
       ],
     );

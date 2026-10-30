@@ -12,7 +12,7 @@ class SignInScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(automaticallyImplyLeading: true),
+          SliverAppBar(automaticallyImplyLeading: false),
           SliverToBoxAdapter(child: SizedBox(height: 60.0)),
           SliverToBoxAdapter(
             child: TitleAndDescriptionWidget(
