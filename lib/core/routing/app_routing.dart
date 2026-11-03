@@ -1,9 +1,10 @@
 import 'package:ai_lingo/feature/auth/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/forgot_password_screen.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/new_password_screen.dart';
+import 'package:ai_lingo/feature/auth/sign_in/cubit/sign_in_cubit.dart';
 import 'package:ai_lingo/feature/auth/verification/verification_screen.dart';
 import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
-import 'package:ai_lingo/feature/auth/sign_in/screen/sign_in_screen.dart';
+import 'package:ai_lingo/feature/auth/sign_in/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/screen/signup_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/progress_screen.dart';
@@ -36,7 +37,7 @@ class AppRouter {
       case AppRoutes.signInScreen:
         return MaterialPageRoute(
           builder: (_) =>
-              BlocProvider(create: (_) => AuthCubit(), child: SignInScreen()),
+              BlocProvider(create: (_) => SignInCubit(), child: SignInScreen()),
         );
 
       case AppRoutes.forgotPasswordScreen:

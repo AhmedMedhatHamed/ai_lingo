@@ -108,7 +108,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                 ),
                 style: TextStyle(fontSize: 21),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8.0),
               Wrap(
                 spacing: 18,
                 runSpacing: 14,

@@ -31,7 +31,7 @@ class NewPasswordForm extends StatelessWidget {
           child: Column(
             children: [
               CustomTextField(
-                controller: context.read<AuthCubit>().passwordController,
+                controller: TextEditingController(),
                 text: 'New Password',
                 prefixIcon: CupertinoIcons.lock_fill,
                 suffixIcon: context.read<AuthCubit>().isObscure

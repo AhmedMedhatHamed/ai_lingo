@@ -1,8 +1,8 @@
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/feature/auth/signup/widgets/title_and_description.dart';
 import 'package:flutter/material.dart';
-import '../widgets/forgot_password_widget.dart';
-import '../widgets/sign_in_form.dart';
+import 'widgets/forgot_password_widget.dart';
+import 'widgets/sign_in_form.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});

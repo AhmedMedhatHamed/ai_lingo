@@ -23,7 +23,7 @@ class ForgotPasswordForm extends StatelessWidget {
           child: Column(
             children: [
               CustomTextField(
-                controller: context.read<AuthCubit>().emailController,
+                controller: TextEditingController(),
                 text: AppStrings.emailAddress,
                 prefixIcon: Icons.email_rounded,
                 textInputAction: .done,

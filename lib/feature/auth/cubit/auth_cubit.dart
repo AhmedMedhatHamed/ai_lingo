@@ -8,8 +8,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
   final confirmNewPassword = TextEditingController();
 
   bool isObscure = true;
@@ -36,21 +34,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> signIn() async {
-    if (!formKey.currentState!.validate()) {
-      autoValidateMode = AutovalidateMode.always;
-      emit(AuthValidationFailed());
-      return;
-    }
 
-    emit(AuthLoading());
-    try {
-      // TODO: call signIn API
-      emit(AuthSuccess());
-    } catch (e) {
-      emit(AuthFailure(e.toString()));
-    }
-  }
 
   Future<void> forgotPassword() async {
     if (!formKey.currentState!.validate()) {
@@ -84,11 +68,4 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  @override
-  Future<void> close() {
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    return super.close();
-  }
 }

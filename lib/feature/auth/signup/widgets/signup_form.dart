@@ -43,7 +43,7 @@ class SignupForm extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               CustomTextField(
-                controller: cubit.emailController,
+                controller: TextEditingController(),
                 text: 'Email Address',
                 prefixIcon: Icons.email_rounded,
                 textInputType: TextInputType.emailAddress,
@@ -52,7 +52,7 @@ class SignupForm extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               CustomTextField(
-                controller: cubit.passwordController,
+                controller: TextEditingController(),
                 text: 'Password',
                 prefixIcon: CupertinoIcons.lock_fill,
                 suffixIcon: cubit.isObscure
