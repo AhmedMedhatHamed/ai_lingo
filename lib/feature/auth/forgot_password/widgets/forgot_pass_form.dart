@@ -1,11 +1,8 @@
 import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/services/validator.dart';
-import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/widgets/custom_button.dart';
 import 'package:ai_lingo/core/widgets/custom_text_field.dart';
-import 'package:ai_lingo/feature/auth/cubit/auth_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,12 +11,12 @@ class ForgotPasswordForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer(
       listener: (context, state) {},
       builder: (context, state) {
         return Form(
-          key: context.read<AuthCubit>().formKey,
-          autovalidateMode: context.read<AuthCubit>().autoValidateMode,
+          //key: context.read<AuthCubit>().formKey,
+          //autovalidateMode: context.read<AuthCubit>().autoValidateMode,
           child: Column(
             children: [
               CustomTextField(
@@ -34,9 +31,7 @@ class ForgotPasswordForm extends StatelessWidget {
               SizedBox(height: 30.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: state is AuthLoading
-                    ? CupertinoActivityIndicator(color: AppColors.primaryColor)
-                    : CustomButton(
+                child: CustomButton(
                         onPressed: () {
                           FocusScope.of(context).unfocus();
 

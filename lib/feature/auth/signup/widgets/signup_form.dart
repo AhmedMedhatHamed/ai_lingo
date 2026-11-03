@@ -4,37 +4,82 @@ import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/widgets/custom_button.dart';
 import 'package:ai_lingo/core/widgets/custom_text_field.dart';
-import 'package:ai_lingo/feature/auth/cubit/auth_cubit.dart';
+import 'package:ai_lingo/feature/auth/signup/cubit/signup_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignupForm extends StatelessWidget {
+class SignupForm extends StatefulWidget {
   const SignupForm({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final cubit = context.read<AuthCubit>();
+  State<SignupForm> createState() => _SignupFormState();
+}
 
-    return BlocConsumer<AuthCubit, AuthState>(
+class _SignupFormState extends State<SignupForm> {
+
+  final formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void signUp() {
+    if (formKey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
+
+      context.read<SignupCubit>().signUp(
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+    } else {
+      setState(() {
+        autoValidateMode = AutovalidateMode.always;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SignupCubit, SignupState>(
       listener: (context, state) {
-        if (state is AuthFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.message)));
-        }
-        if (state is AuthSuccess) {
-          // TODO: navigate to next screen
+        if (state is SignupFailureState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.errorMsg),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } else if (state is SignupSuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Account created successfully'),
+              backgroundColor: AppColors.primaryColor,
+            ),
+          );
+
+          Navigator.pushReplacementNamed(context, AppRoutes.verificationScreen);
         }
       },
       builder: (context, state) {
+        final cubit = context.read<SignupCubit>();
+
         return Form(
-          key: cubit.formKey,
-          autovalidateMode: cubit.autoValidateMode,
+          key: formKey,
+          autovalidateMode: autoValidateMode,
           child: Column(
             children: [
               CustomTextField(
-                controller: cubit.nameController,
+                controller: nameController,
                 text: 'Full Name',
                 prefixIcon: Icons.person,
                 textInputType: TextInputType.name,
@@ -43,7 +88,7 @@ class SignupForm extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               CustomTextField(
-                controller: TextEditingController(),
+                controller: emailController,
                 text: 'Email Address',
                 prefixIcon: Icons.email_rounded,
                 textInputType: TextInputType.emailAddress,
@@ -52,7 +97,7 @@ class SignupForm extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               CustomTextField(
-                controller: TextEditingController(),
+                controller: passwordController,
                 text: 'Password',
                 prefixIcon: CupertinoIcons.lock_fill,
                 suffixIcon: cubit.isObscure
@@ -63,21 +108,16 @@ class SignupForm extends StatelessWidget {
                 textInputType: TextInputType.visiblePassword,
                 textInputAction: TextInputAction.done,
                 validator: Validators.password,
-                onFieldSubmitted: (_) => cubit.signUp(),
+                onFieldSubmitted: (_) => signUp(),
               ),
               const SizedBox(height: 30.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: state is AuthLoading
-                    ? CupertinoActivityIndicator(color: AppColors.primaryColor)
-                    : CustomButton(
-                        onPressed: () {
-                          FocusScope.of(context).unfocus();
-                          cubit.signUp();
-                          Navigator.pushReplacementNamed(context, AppRoutes.verificationScreen);
-                        },
-                        text: AppStrings.signUp,
-                      ),
+                child: state is SignupLoadingState
+                    ? const CupertinoActivityIndicator(
+                        color: AppColors.primaryColor,
+                      )
+                    : CustomButton(onPressed: signUp, text: AppStrings.signUp),
               ),
               const SizedBox(height: 20.0),
             ],
