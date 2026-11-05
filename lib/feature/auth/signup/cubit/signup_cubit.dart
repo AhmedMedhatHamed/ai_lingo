@@ -1,8 +1,8 @@
-import 'package:ai_lingo/feature/auth/models/user_model.dart';
-import 'package:ai_lingo/feature/auth/repo/user_repo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../models/user_model.dart';
+import '../../repo/user_repo.dart';
 
 part 'signup_state.dart';
 
@@ -46,6 +46,8 @@ class SignupCubit extends Cubit<SignupState> {
       );
 
       await userRepository.createUser(userModel);
+
+      await user.sendEmailVerification();
 
       emit(SignupSuccessState());
     } on FirebaseAuthException catch (e) {
