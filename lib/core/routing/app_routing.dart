@@ -1,5 +1,7 @@
+import 'package:ai_lingo/core/services/firestore_service.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/forgot_password_screen.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/new_password_screen.dart';
+import 'package:ai_lingo/feature/auth/repo/user_repo.dart';
 import 'package:ai_lingo/feature/auth/sign_in/cubit/sign_in_cubit.dart';
 import 'package:ai_lingo/feature/auth/signup/cubit/signup_cubit.dart';
 import 'package:ai_lingo/feature/auth/verification/verification_screen.dart';
@@ -30,8 +32,11 @@ class AppRouter {
 
       case AppRoutes.signupScreen:
         return MaterialPageRoute(
-          builder: (_) =>
-              BlocProvider(create: (_) => SignupCubit(), child: SignupScreen()),
+          builder: (_) => BlocProvider(
+            create: (context) =>
+                SignupCubit(UserRepository(FirestoreService())),
+            child: const SignupScreen(),
+          ),
         );
 
       case AppRoutes.signInScreen:
@@ -41,15 +46,11 @@ class AppRouter {
         );
 
       case AppRoutes.forgotPasswordScreen:
-        return MaterialPageRoute(
-          builder: (_) => ForgotPasswordScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
       case AppRoutes.verificationScreen:
         return MaterialPageRoute(builder: (_) => const VerificationScreen());
       case AppRoutes.newPasswordScreen:
-        return MaterialPageRoute(
-          builder: (_) => NewPasswordScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => NewPasswordScreen());
 
       case AppRoutes.profileSetupScreen:
         return MaterialPageRoute(builder: (_) => const ProfileSetupScreen());
@@ -78,7 +79,6 @@ class AppRouter {
 
       case AppRoutes.progressScreen:
         return MaterialPageRoute(builder: (_) => ProgressScreen());
-
     }
 
     return null;
