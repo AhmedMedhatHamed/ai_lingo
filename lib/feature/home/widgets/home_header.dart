@@ -1,6 +1,7 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_images.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -9,23 +10,11 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final userName = FirebaseAuth.instance.currentUser?.displayName ?? 'Guest';
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          width: size.width * 0.15,
-          height: size.width * 0.15,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              width: size.width * 0.005,
-              color: AppColors.primaryColor,
-            ),
-          ),
-          child: Icon(Icons.person_3, size: 30, color: AppColors.splashColor),
-        ),
-
         Column(
           children: [
             SizedBox(height: size.height * 0.02),
@@ -42,10 +31,11 @@ class HomeHeader extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Reem',
+                      userName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: AppStyles.almarai400Size24.copyWith(
                         fontWeight: FontWeight.w700,
-                        fontSize: 32,
                       ),
                     ),
                   ],
