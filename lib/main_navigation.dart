@@ -4,11 +4,13 @@ import 'package:ai_lingo/core/utils/app_styles.dart';
 import 'package:ai_lingo/feature/chat/screen/chat_screen.dart';
 import 'package:ai_lingo/feature/home/screen/home_screen.dart';
 import 'package:ai_lingo/core/widgets/custom_icon.dart';
+import 'package:ai_lingo/feature/profile/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/profile/profile_screen.dart';
 import 'package:ai_lingo/feature/scenarios/screen/scenarios_screen.dart';
 import 'package:ai_lingo/feature/vocabulary/screen/vocabulary_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -23,7 +25,9 @@ class _MainNavigationState extends State<MainNavigation> {
     ScenariosScreen(),
     ChatScreen(),
     VocabularyScreen(),
-    ProfileScreen(),
+    BlocProvider(
+      create: (context) => AuthCubit(),
+        child: ProfileScreen()),
   ];
 
   int _currentIndex = 0;

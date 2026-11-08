@@ -14,5 +14,6 @@ class AppRoutes {
   static const String vocabularyScreen = 'vocabularyScreen';
   static const String conversationHistoryScreen = 'conversationHistoryScreen';
   static const String progressScreen = 'progressScreen';
+  static const String verifyAccount = 'verifyAccount';
 }
  

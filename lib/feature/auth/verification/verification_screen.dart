@@ -15,7 +15,7 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
   final List<TextEditingController> _controllers = List.generate(
     6,
-    (_) => TextEditingController(),
+        (_) => TextEditingController(),
   );
 
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
@@ -37,6 +37,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
     });
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
       if (_remainingSeconds > 0) {
         setState(() {
           _remainingSeconds--;
@@ -86,7 +90,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
     _focusNodes[0].requestFocus();
 
     cubit.sendCode(phone);
-    _startTimer();
   }
 
   @override
@@ -132,7 +135,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
       builder: (context, state) {
         final isLoading =
             state is PhoneVerificationLoadingState ||
-            state is PhoneVerifyingState;
+                state is PhoneVerifyingState;
 
         return Scaffold(
           appBar: AppBar(),
@@ -183,7 +186,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: List.generate(
                         6,
-                        (index) => SizedBox(
+                            (index) => SizedBox(
                           width: 45.0,
                           height: 60.0,
                           child: TextField(
@@ -262,20 +265,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         ),
                         child: isLoading
                             ? const SizedBox(
-                                width: 22,
-                                height: 22,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                              )
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
                             : Text(
-                                'Continue',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  color: AppColors.backgroundColor,
-                                ),
-                              ),
+                          'Continue',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: AppColors.backgroundColor,
+                          ),
+                        ),
                       ),
                     ),
                   ],

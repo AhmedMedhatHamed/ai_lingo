@@ -31,4 +31,18 @@ class Validators {
     }
     return null;
   }
+
+  static String? phone(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Phone number is required';
+    }
+
+    final phoneRegex = RegExp(r'^01[0125][0-9]{8}$');
+
+    if (!phoneRegex.hasMatch(value.trim())) {
+      return 'Enter a valid Egyptian phone number';
+    }
+
+    return null;
+  }
 }

@@ -12,9 +12,13 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
   String? phoneNumber;
   int? resendToken;
 
+  void _safeEmit(PhoneVerificationState state) {
+    if (!isClosed) emit(state);
+  }
+
   Future<void> sendCode(String phone) async {
     if (phone.trim().isEmpty) {
-      emit(
+      _safeEmit(
         PhoneVerificationFailureState(
           errorMsg: 'Please enter your phone number.',
         ),
@@ -24,7 +28,7 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
 
     phoneNumber = phone.trim();
 
-    emit(PhoneVerificationLoadingState());
+    _safeEmit(PhoneVerificationLoadingState());
 
     try {
       await firebaseAuth.verifyPhoneNumber(
@@ -37,10 +41,8 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
         },
 
         verificationFailed: (FirebaseAuthException e) {
-          emit(
-            PhoneVerificationFailureState(
-              errorMsg: e.message ?? e.code,
-            ),
+          _safeEmit(
+            PhoneVerificationFailureState(errorMsg: e.message ?? e.code),
           );
         },
 
@@ -48,7 +50,7 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
           verificationId = id;
           resendToken = token;
 
-          emit(PhoneCodeSentState());
+          _safeEmit(PhoneCodeSentState());
         },
 
         codeAutoRetrievalTimeout: (String id) {
@@ -56,23 +58,15 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
         },
       );
     } on FirebaseAuthException catch (e) {
-      emit(
-        PhoneVerificationFailureState(
-          errorMsg: e.message ?? e.code,
-        ),
-      );
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.message ?? e.code));
     } catch (e) {
-      emit(
-        PhoneVerificationFailureState(
-          errorMsg: e.toString(),
-        ),
-      );
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.toString()));
     }
   }
 
   Future<void> verifyCode(String smsCode) async {
     if (verificationId == null) {
-      emit(
+      _safeEmit(
         PhoneVerificationFailureState(
           errorMsg: 'Please request the verification code first.',
         ),
@@ -81,7 +75,7 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
     }
 
     if (smsCode.trim().length != 6) {
-      emit(
+      _safeEmit(
         PhoneVerificationFailureState(
           errorMsg: 'Please enter a valid 6-digit code.',
         ),
@@ -89,7 +83,7 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
       return;
     }
 
-    emit(PhoneVerifyingState());
+    _safeEmit(PhoneVerifyingState());
 
     try {
       final credential = PhoneAuthProvider.credential(
@@ -99,31 +93,19 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
 
       await linkPhoneNumber(credential);
     } on FirebaseAuthException catch (e) {
-      emit(
-        PhoneVerificationFailureState(
-          errorMsg: e.message ?? e.code,
-        ),
-      );
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.message ?? e.code));
     } catch (e) {
-      emit(
-        PhoneVerificationFailureState(
-          errorMsg: e.toString(),
-        ),
-      );
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.toString()));
     }
   }
 
-  Future<void> linkPhoneNumber(
-      PhoneAuthCredential credential,
-      ) async {
+  Future<void> linkPhoneNumber(PhoneAuthCredential credential) async {
     try {
       final user = firebaseAuth.currentUser;
 
       if (user == null) {
-        emit(
-          PhoneVerificationFailureState(
-            errorMsg: 'Please sign up first.',
-          ),
+        _safeEmit(
+          PhoneVerificationFailureState(errorMsg: 'Please sign up first.'),
         );
         return;
       }
@@ -135,9 +117,9 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
       final updatedUser = firebaseAuth.currentUser;
 
       if (updatedUser?.phoneNumber != null) {
-        emit(PhoneVerificationSuccessState());
+        _safeEmit(PhoneVerificationSuccessState());
       } else {
-        emit(
+        _safeEmit(
           PhoneVerificationFailureState(
             errorMsg: 'Phone number verification failed.',
           ),
@@ -148,22 +130,14 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
         await firebaseAuth.currentUser?.reload();
 
         if (firebaseAuth.currentUser?.phoneNumber != null) {
-          emit(PhoneVerificationSuccessState());
+          _safeEmit(PhoneVerificationSuccessState());
           return;
         }
       }
 
-      emit(
-        PhoneVerificationFailureState(
-          errorMsg: e.message ?? e.code,
-        ),
-      );
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.message ?? e.code));
     } catch (e) {
-      emit(
-        PhoneVerificationFailureState(
-          errorMsg: e.toString(),
-        ),
-      );
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.toString()));
     }
   }
 }

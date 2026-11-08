@@ -11,6 +11,7 @@ import 'package:ai_lingo/feature/auth/sign_in/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/signup_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/progress_screen.dart';
+import 'package:ai_lingo/feature/profile/screen/verify_account.dart';
 import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
 import 'package:ai_lingo/feature/profile_setup/screen/profile_setup_screen.dart';
@@ -87,6 +88,14 @@ class AppRouter {
 
       case AppRoutes.progressScreen:
         return MaterialPageRoute(builder: (_) => ProgressScreen());
+
+      case AppRoutes.verifyAccount:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => PhoneVerificationCubit(),
+            child: VerifyAccount(),
+          ),
+        );
     }
 
     return null;

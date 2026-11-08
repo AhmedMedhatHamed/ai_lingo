@@ -15,14 +15,14 @@ class ProfileName extends StatelessWidget {
         Spacer(),
         Padding(
           padding: const EdgeInsets.only(left: 35.0),
-          child: Text(userName, style: AppStyles.almaraiBoldSize32,),
+          child: Text(userName, style: AppStyles.almaraiBoldSize32),
         ),
         Spacer(),
         IconButton(
           onPressed: () {
             Navigator.pushNamed(context, AppRoutes.editProfileScreen);
           },
-          icon: Icon(Icons.edit, color: Colors.black,size: 32,),
+          icon: Icon(Icons.edit, color: Colors.black, size: 32),
         ),
       ],
     );

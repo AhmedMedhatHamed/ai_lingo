@@ -1,9 +1,13 @@
 import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/profile/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/profile/widgets/show_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_strings.dart';
+import 'ask_password.dart';
 import 'custom_list_tile.dart';
 
 class ProfileSetting extends StatelessWidget {
@@ -46,45 +50,65 @@ class ProfileSetting extends StatelessWidget {
           },
         ),
         CustomListTile(
-          icon: Icons.help,
-          text: 'Help & Support',
+          icon: Icons.phone,
+          text: 'Verify Account',
           trailing: Icon(Icons.arrow_forward_ios),
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.verifyAccount);
+          },
         ),
         CustomListTile(
           icon: Icons.logout,
           text: 'Logout',
-          trailing: Icon(Icons.arrow_forward_ios),
-
+          trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () {
             showWarningDialog(
               context,
               text: 'Are you sure you want to Log Out',
               action: AppStrings.logOut,
               buttonColor: AppColors.primaryColor,
-              onPressed: () {
-                ///logout logic
-                Navigator.pushReplacementNamed(context, AppRoutes.signInScreen);
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+
+                if (!context.mounted) return;
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AppRoutes.signInScreen,
+                  (route) => false,
+                );
               },
             );
           },
         ),
-        CustomListTile(
-          icon: Icons.cancel,
-          text: 'Delete Account',
-          trailing: Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            showWarningDialog(
-              context,
-              text: 'Are uou sure you want to Delete this Account',
-              action: 'Delete Account',
-              buttonColor: AppColors.secondaryColor,
-              onPressed: () {
-                ///Delete Logic
-                Navigator.pushReplacementNamed(context, AppRoutes.signupScreen);
-              },
-            );
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is DeleteAccountSuccessState) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.signInScreen,
+                    (route) => false,
+              );
+            } else if (state is DeleteAccountRequiresReAuthState) {
+              askPasswordAndRetry(context);
+            } else if (state is DeleteAccountFailureState) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.errorMsg)));
+            }
           },
+          child: CustomListTile(
+            icon: Icons.cancel,
+            text: 'Delete Account',
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              showWarningDialog(
+                context,
+                text: 'This will permanently delete your account and data',
+                action: 'Delete',
+                buttonColor: Colors.red,
+                onPressed: () => context.read<AuthCubit>().deleteAccount(),
+              );
+            },
+          ),
         ),
       ],
     );
