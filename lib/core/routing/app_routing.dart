@@ -12,6 +12,7 @@ import 'package:ai_lingo/feature/auth/sign_in/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/signup_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/progress_screen.dart';
+import 'package:ai_lingo/feature/profile/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/profile/screen/verify_account.dart';
 import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
@@ -81,7 +82,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => EditProfileScreen());
 
       case AppRoutes.changePasswordScreen:
-        return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => AuthCubit(),
+            child: ChangePasswordScreen(),
+          ),
+        );
 
       case AppRoutes.mainNavigation:
         return MaterialPageRoute(builder: (_) => MainNavigation());

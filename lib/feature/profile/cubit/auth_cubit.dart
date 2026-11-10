@@ -18,7 +18,6 @@ class AuthCubit extends Cubit<AuthState> {
         return;
       }
 
-      // لو المستخدم كتب الباسورد، اعمل re-auth الأول
       if (password != null && user.email != null) {
         final credential = EmailAuthProvider.credential(
           email: user.email!,
@@ -27,13 +26,11 @@ class AuthCubit extends Cubit<AuthState> {
         await user.reauthenticateWithCredential(credential);
       }
 
-      // 1) امسح بياناته أولاً (غيّر اسم الـ collection حسب مشروعك)
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .delete();
 
-      // 2) امسح الحساب
       await user.delete();
 
       emit(DeleteAccountSuccessState());
@@ -45,6 +42,55 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } catch (e) {
       emit(DeleteAccountFailureState(errorMsg: e.toString()));
+    }
+  }
+
+  Future<void> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+    emit(ChangePasswordLoading());
+
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user == null || user.email == null) {
+        emit(ChangePasswordFailure(
+          errorMsg: 'User not found. Please login again.',
+        ));
+        return;
+      }
+
+      final credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: oldPassword,
+      );
+
+      await user.reauthenticateWithCredential(credential);
+
+      await user.updatePassword(newPassword);
+
+      emit(ChangePasswordSuccess());
+    } on FirebaseAuthException catch (e) {
+      String message;
+
+      switch (e.code) {
+        case 'wrong-password':
+          message = 'The old password is incorrect';
+          break;
+        case 'weak-password':
+          message = 'The new password is too weak';
+          break;
+        case 'requires-recent-login':
+          message = 'Please login again and try';
+          break;
+        default:
+          message = e.message ?? 'Something went wrong';
+      }
+
+      emit(ChangePasswordFailure(errorMsg: message));
+    } catch (e) {
+      emit(ChangePasswordFailure(errorMsg: e.toString()));
     }
   }
 }

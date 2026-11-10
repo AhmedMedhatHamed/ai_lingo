@@ -15,3 +15,13 @@ class DeleteAccountFailureState extends AuthState {
   final String errorMsg;
   DeleteAccountFailureState({required this.errorMsg});
 }
+
+class ChangePasswordLoading extends AuthState {}
+
+class ChangePasswordSuccess extends AuthState {}
+
+class ChangePasswordFailure extends AuthState {
+  final String errorMsg;
+
+  ChangePasswordFailure({required this.errorMsg});
+}
