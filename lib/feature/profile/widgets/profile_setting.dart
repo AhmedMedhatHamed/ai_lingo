@@ -50,11 +50,10 @@ class ProfileSetting extends StatelessWidget {
           },
         ),
         CustomListTile(
-          icon: Icons.phone,
-          text: 'Verify Account',
+          icon: Icons.help,
+          text: 'Help & Support',
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {
-            Navigator.pushNamed(context, AppRoutes.verifyAccount);
           },
         ),
         CustomListTile(

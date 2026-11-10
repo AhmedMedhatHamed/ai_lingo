@@ -66,7 +66,7 @@ class _SignupFormState extends State<SignupForm> {
             ),
           );
 
-          Navigator.pushReplacementNamed(context, AppRoutes.verificationScreen);
+          Navigator.pushReplacementNamed(context, AppRoutes.mainNavigation);
         }
       },
       builder: (context, state) {

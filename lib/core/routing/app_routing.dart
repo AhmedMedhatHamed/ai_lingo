@@ -1,4 +1,5 @@
 import 'package:ai_lingo/core/services/firestore_service.dart';
+import 'package:ai_lingo/feature/auth/forgot_password/cubit/forgot_password_cubit.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/forgot_password_screen.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/new_password_screen.dart';
 import 'package:ai_lingo/feature/auth/repo/user_repo.dart';
@@ -48,7 +49,12 @@ class AppRouter {
         );
 
       case AppRoutes.forgotPasswordScreen:
-        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => ForgotPasswordCubit(),
+            child: ForgotPasswordScreen(),
+          ),
+        );
 
       case AppRoutes.verificationScreen:
         return MaterialPageRoute(
