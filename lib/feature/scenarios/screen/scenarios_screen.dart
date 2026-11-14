@@ -49,9 +49,12 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
     ),
   ];
 
+  late List<Scenario> filteredScenarios;
+
   @override
   void initState() {
     searchController = TextEditingController();
+    filteredScenarios = scenarios;
     super.initState();
   }
 
@@ -59,6 +62,25 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  void scenariosSearch(String searchInput) {
+    setState(() {
+      filteredScenarios = scenarios
+          .where(
+            (scenario) =>
+                scenario.title.toLowerCase().contains(
+                  searchInput.toLowerCase(),
+                ) ||
+                scenario.description.toLowerCase().contains(
+                  searchInput.toLowerCase(),
+                ) ||
+                scenario.level.toLowerCase().contains(
+                  searchInput.toLowerCase(),
+                ),
+          )
+          .toList();
+    });
   }
 
   @override
@@ -114,6 +136,7 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
                         ),
                       ),
                     ),
+                    onChanged: scenariosSearch,
                   ),
                 ),
 
@@ -123,13 +146,13 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      final scenario = scenarios[index];
+                      final scenario = filteredScenarios[index];
                       return ScenarioWidget(scenario: scenario);
                     },
                     separatorBuilder: (context, index) {
                       return SizedBox(height: size.height * 0.02);
                     },
-                    itemCount: scenarios.length,
+                    itemCount: filteredScenarios.length,
                   ),
                 ),
                 SizedBox(height: size.height * 0.02),
