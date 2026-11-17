@@ -11,4 +11,13 @@ class FirestoreService {
   Future<DocumentSnapshot<Map<String, dynamic>>> getUser(String uid) async {
     return await firestore.collection('users').doc(uid).get();
   }
+
+  Future<void> saveMessagingInstallationId(
+    String uid,
+    String installationId,
+  ) async {
+    await firestore.collection('users').doc(uid).set({
+      'messagingInstallationIds': FieldValue.arrayUnion([installationId]),
+    }, SetOptions(merge: true));
+  }
 }

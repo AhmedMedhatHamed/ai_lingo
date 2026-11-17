@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/notifications/notification_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,7 @@ class SignInCubit extends Cubit<SignInState> {
   SignInCubit() : super(SignInInitial());
 
   bool isObscure = true;
-
+  final NotificationService _notificationService = NotificationService();
   void togglePasswordVisibility() {
     isObscure = !isObscure;
     emit(SignInPasswordVisibilityChanged(isObscure));
@@ -22,6 +23,12 @@ class SignInCubit extends Cubit<SignInState> {
         email: email,
         password: password,
       );
+
+      try {
+        await _notificationService.initialize();
+      } catch (e) {
+        debugPrint('Notification initialization failed: $e');
+      }
 
       emit(SignInSuccessState());
     } on FirebaseAuthException catch (e) {
