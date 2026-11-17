@@ -25,3 +25,13 @@ class ChangePasswordFailure extends AuthState {
 
   ChangePasswordFailure({required this.errorMsg});
 }
+
+class ChangeNameLoading extends AuthState {}
+
+class ChangeNameSuccess extends AuthState {}
+
+class ChangeNameFailure extends AuthState {
+  final String errorMsg;
+
+  ChangeNameFailure({required this.errorMsg});
+}

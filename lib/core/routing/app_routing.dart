@@ -79,7 +79,9 @@ class AppRouter {
         );
 
       case AppRoutes.editProfileScreen:
-        return MaterialPageRoute(builder: (_) => EditProfileScreen());
+        return MaterialPageRoute(builder: (_) => BlocProvider(
+          create: (context) => AuthCubit(),
+            child: EditProfileScreen()));
 
       case AppRoutes.changePasswordScreen:
         return MaterialPageRoute(

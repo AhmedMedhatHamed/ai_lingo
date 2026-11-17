@@ -55,9 +55,11 @@ class AuthCubit extends Cubit<AuthState> {
       final user = FirebaseAuth.instance.currentUser;
 
       if (user == null || user.email == null) {
-        emit(ChangePasswordFailure(
-          errorMsg: 'User not found. Please login again.',
-        ));
+        emit(
+          ChangePasswordFailure(
+            errorMsg: 'User not found. Please login again.',
+          ),
+        );
         return;
       }
 
@@ -92,5 +94,20 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(ChangePasswordFailure(errorMsg: e.toString()));
     }
+  }
+
+  Future<void> changeName(String name) async {
+    emit(ChangeNameLoading());
+    try{
+      final user = FirebaseAuth.instance.currentUser;
+      await user?.updateDisplayName(name);
+      await user?.reload();
+      FirebaseAuth.instance.currentUser?.displayName;
+      emit(ChangeNameSuccess());
+    }
+    catch(e){
+      emit(ChangeNameFailure(errorMsg: e.toString()));
+    }
+
   }
 }
