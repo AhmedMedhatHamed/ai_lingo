@@ -11,5 +11,6 @@ class AppImages {
   static const String fire = 'assets/images/fire.json';
   static const String confetti = 'assets/images/confetti.json';
   static const String aiTypingIndicator = 'assets/images/ai_typing_indicator.json';
+  static const String verificationImage = 'assets/images/verifyAccount.png';
 }
   
