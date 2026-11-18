@@ -1,4 +1,5 @@
 import 'package:ai_lingo/feature/auth/models/user_model.dart';
+import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreService {
@@ -10,6 +11,17 @@ class FirestoreService {
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUser(String uid) async {
     return await firestore.collection('users').doc(uid).get();
+  }
+
+  Future<void> addScenario(Scenario scenario) async {
+    await firestore
+        .collection('scenarios')
+        .doc(scenario.title)
+        .set(scenario.toMap());
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getScenarios() async {
+    return await firestore.collection('scenarios').get();
   }
 
   Future<void> saveMessagingInstallationId(

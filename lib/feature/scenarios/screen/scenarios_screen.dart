@@ -2,9 +2,12 @@ import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_images.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/scenarios/cubit/scenarios_cubit.dart';
+import 'package:ai_lingo/feature/scenarios/cubit/scenarios_state.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:ai_lingo/feature/scenarios/screen/widgets/scenario_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ScenariosScreen extends StatefulWidget {
   const ScenariosScreen({super.key});
@@ -16,46 +19,15 @@ class ScenariosScreen extends StatefulWidget {
 class _ScenariosScreenState extends State<ScenariosScreen> {
   late TextEditingController searchController;
 
-  final scenarios = [
-    Scenario(
-      title: 'Ordering Coffee',
-      description: 'Practice ordering your favorite drink at a cafe.',
-      icon: Icons.coffee,
-      level: 'Beginner',
-    ),
-    Scenario(
-      title: 'Airport Check-in',
-      description: 'Learn how to ask questions and check your luggage.',
-      icon: Icons.airplanemode_active,
-      level: 'Intermediate',
-    ),
-    Scenario(
-      title: 'Job Interview',
-      description: 'Answer common interview questions with confidence.',
-      icon: Icons.shopping_bag_outlined,
-      level: 'Advanced',
-    ),
-    Scenario(
-      title: 'Grocery Shopping',
-      description: 'Practice asking for items and prices at the store.',
-      icon: Icons.store_outlined,
-      level: 'Beginner',
-    ),
-    Scenario(
-      title: 'Doctor Consultation',
-      description: 'Explain complex symptoms and discuss medical advice.',
-      icon: Icons.health_and_safety,
-      level: 'Intermediate',
-    ),
-  ];
-
-  late List<Scenario> filteredScenarios;
+  List<Scenario> scenarios = [];
+  List<Scenario> filteredScenarios = [];
 
   @override
   void initState() {
-    searchController = TextEditingController();
-    filteredScenarios = scenarios;
     super.initState();
+
+    searchController = TextEditingController();
+    Future.microtask(() => context.read<ScenariosCubit>().getScenarios());
   }
 
   @override
@@ -140,20 +112,40 @@ class _ScenariosScreenState extends State<ScenariosScreen> {
                   ),
                 ),
 
-                SizedBox(
-                  width: size.width * 0.92,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final scenario = filteredScenarios[index];
-                      return ScenarioWidget(scenario: scenario);
-                    },
-                    separatorBuilder: (context, index) {
-                      return SizedBox(height: size.height * 0.02);
-                    },
-                    itemCount: filteredScenarios.length,
-                  ),
+                BlocConsumer<ScenariosCubit, ScenariosState>(
+                  builder: (context, state) {
+                    if (state is ScenariosLoadingState) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.primaryColor,
+                        ),
+                      );
+                    }
+
+                    return SizedBox(
+                      width: size.width * 0.92,
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final scenario = filteredScenarios[index];
+                          return ScenarioWidget(scenario: scenario);
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: size.height * 0.02);
+                        },
+                        itemCount: filteredScenarios.length,
+                      ),
+                    );
+                  },
+                  listener: (context, state) {
+                    if (state is ScenariosSuccessState) {
+                      setState(() {
+                        scenarios = state.scenarios;
+                        filteredScenarios = state.scenarios;
+                      });
+                    }
+                  },
                 ),
                 SizedBox(height: size.height * 0.02),
               ],

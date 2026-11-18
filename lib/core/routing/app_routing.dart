@@ -14,6 +14,8 @@ import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.
 import 'package:ai_lingo/feature/home/screen/screen/progress_screen.dart';
 import 'package:ai_lingo/feature/profile/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/profile/screen/verify_account.dart';
+import 'package:ai_lingo/feature/scenarios/cubit/scenarios_cubit.dart';
+import 'package:ai_lingo/feature/scenarios/repo/scenario_repo.dart';
 import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
 import 'package:ai_lingo/feature/profile_setup/screen/profile_setup_screen.dart';
@@ -92,7 +94,20 @@ class AppRouter {
         );
 
       case AppRoutes.mainNavigation:
-        return MaterialPageRoute(builder: (_) => MainNavigation());
+        return MaterialPageRoute(
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => ScenariosCubit(
+                  scenarioRepository: ScenarioRepository(
+                    firestoreService: FirestoreService(),
+                  ),
+                ),
+              ),
+            ],
+            child: MainNavigation(),
+          ),
+        );
 
       case AppRoutes.vocabularyScreen:
         return MaterialPageRoute(builder: (_) => VocabularyScreen());

@@ -1,3 +1,5 @@
+import 'package:ai_lingo/core/services/firestore_service.dart';
+import 'package:ai_lingo/feature/scenarios/repo/scenario_repo.dart';
 import 'package:ai_lingo/core/notifications/notification_handler.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +24,12 @@ Future<void> main() async {
     debugPrint('Notification tapped: ${message.messageId}');
     debugPrint('Notification data: ${message.data}');
   });
+
+  // Uploading Scenarios on FireStore only one time
+  // final FirestoreService firestoreService = FirestoreService();
+  // for (var scenario in scenarios) {
+  //   await firestoreService.addScenario(scenario);
+  // }
 
   runApp(const AiLingoApp());
 }
