@@ -22,6 +22,23 @@ class ScenarioWidget extends StatelessWidget {
     }
   }
 
+  IconData? getScenarioIcon(String icon) {
+    switch (icon) {
+      case 'coffee':
+        return Icons.coffee;
+      case 'airplanemode_active':
+        return Icons.airplanemode_active;
+      case 'shopping_bag_outlined':
+        return Icons.shopping_bag_outlined;
+      case 'store_outlined':
+        return Icons.store_outlined;
+      case 'health_and_safety':
+        return Icons.health_and_safety;
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -34,11 +51,12 @@ class ScenarioWidget extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
-            scenario.icon,
-            color: AppColors.secondaryColor,
-            size: size.height * 0.045,
-          ),
+          if (getScenarioIcon(scenario.icon) != null)
+            Icon(
+              getScenarioIcon(scenario.icon),
+              color: AppColors.secondaryColor,
+              size: size.height * 0.045,
+            ),
           Expanded(
             child: Text(
               scenario.title,
@@ -56,10 +74,7 @@ class ScenarioWidget extends StatelessWidget {
                 );
               }
             },
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              size: size.height * 0.05,
-            ),
+            icon: Icon(Icons.arrow_forward_ios, size: size.height * 0.05),
           ),
         ],
       ),
