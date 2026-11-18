@@ -23,4 +23,13 @@ class FirestoreService {
   Future<QuerySnapshot<Map<String, dynamic>>> getScenarios() async {
     return await firestore.collection('scenarios').get();
   }
+
+  Future<void> saveMessagingInstallationId(
+    String uid,
+    String installationId,
+  ) async {
+    await firestore.collection('users').doc(uid).set({
+      'messagingInstallationIds': FieldValue.arrayUnion([installationId]),
+    }, SetOptions(merge: true));
+  }
 }
