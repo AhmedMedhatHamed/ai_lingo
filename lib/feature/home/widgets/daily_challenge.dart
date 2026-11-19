@@ -1,8 +1,11 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_images.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DailyChallenge extends StatelessWidget {
   const DailyChallenge({super.key});
@@ -32,7 +35,10 @@ class DailyChallenge extends StatelessWidget {
           AppStrings.practice5mins,
           style: AppStyles.almarai400Size24.copyWith(fontSize: 16),
         ),
-        onTap: () {},
+        onTap: () {
+          context.read<HomeCubit>().updateStreak();
+          Navigator.pushNamed(context, AppRoutes.chatScreen);
+        },
       ),
     );
   }

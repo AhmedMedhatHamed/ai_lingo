@@ -1,4 +1,3 @@
-
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +9,6 @@ class FreePracticeScreen extends StatefulWidget {
 }
 
 class _FreePracticeScreenState extends State<FreePracticeScreen> {
-
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -19,12 +17,10 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
       'text': 'Hi Ahmed! 👋 What would you like to talk about today?',
       'isUser': false,
     },
+    {'text': "I'd love to improve my English speaking skills.", 'isUser': true},
     {
-      'text': "I'd love to improve my English speaking skills.",
-      'isUser': true,
-    },
-    {
-      'text': "That's great! Let's practice together. Choose a topic or ask me anything.",
+      'text':
+          "That's great! Let's practice together. Choose a topic or ask me anything.",
       'isUser': false,
     },
   ];
@@ -121,10 +117,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.more_vert,
-              color: Color(0xFF334155),
-            ),
+            icon: const Icon(Icons.more_vert, color: Color(0xFF334155)),
           ),
         ],
       ),
@@ -134,10 +127,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
             Container(
               width: double.infinity,
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 13,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
               child: const Row(
                 children: [
                   Icon(
@@ -156,18 +146,11 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                       ),
                     ),
                   ),
-                  Icon(
-                    Icons.auto_awesome,
-                    color: Color(0xFFF59E0B),
-                    size: 19,
-                  ),
+                  Icon(Icons.auto_awesome, color: Color(0xFFF59E0B), size: 19),
                   SizedBox(width: 5),
                   Text(
                     'Open topic',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF64748B),
-                    ),
+                    style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
                   ),
                 ],
               ),
@@ -179,7 +162,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
                 children: [
                   ..._messages.map(
-                        (message) => _ChatBubble(
+                    (message) => _ChatBubble(
                       text: message['text'] as String,
                       isUser: message['isUser'] as bool,
                     ),
@@ -205,9 +188,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                       return ActionChip(
                         onPressed: () => _sendMessage(suggestion),
                         backgroundColor: Colors.white,
-                        side: const BorderSide(
-                          color: Color(0xFFBFDBFE),
-                        ),
+                        side: const BorderSide(color: Color(0xFFBFDBFE)),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -234,9 +215,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 16),
               decoration: const BoxDecoration(
                 color: Colors.white,
-                border: Border(
-                  top: BorderSide(color: Color(0xFFE2E8F0)),
-                ),
+                border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
               ),
               child: Row(
                 children: [
@@ -300,10 +279,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
 }
 
 class _ChatBubble extends StatelessWidget {
-  const _ChatBubble({
-    required this.text,
-    required this.isUser,
-  });
+  const _ChatBubble({required this.text, required this.isUser});
 
   final String text;
   final bool isUser;
@@ -313,8 +289,9 @@ class _ChatBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Row(
-        mainAxisAlignment:
-        isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isUser) ...[
@@ -334,10 +311,7 @@ class _ChatBubble extends StatelessWidget {
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.sizeOf(context).width * 0.74,
               ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 12,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
               decoration: BoxDecoration(
                 color: isUser ? const Color(0xFF1D4ED8) : Colors.white,
                 borderRadius: BorderRadius.only(

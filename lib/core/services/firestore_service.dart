@@ -32,4 +32,40 @@ class FirestoreService {
       'messagingInstallationIds': FieldValue.arrayUnion([installationId]),
     }, SetOptions(merge: true));
   }
+
+  Future<void> updateStreak(String uid) async {
+    final userRef = await firestore.collection('users').doc(uid);
+    final user = await userRef.get();
+
+    final currentStreak = user.data()?['currentStreak'] ?? 0;
+    final lastActive = user.data()?['lastActive'] as Timestamp?;
+
+    final today = DateTime.now();
+    final todayDate = DateTime(today.year, today.month, today.day);
+
+    if (lastActive == null) {
+      await userRef.update({
+        'currentStreak': 1,
+        'lastActive': Timestamp.fromDate(todayDate),
+      });
+      return;
+    }
+
+    final lastDate = lastActive.toDate();
+    final differenceDays = today
+        .difference(DateTime(lastDate.year, lastDate.month, lastDate.day))
+        .inDays;
+
+    if (differenceDays == 1) {
+      await userRef.update({
+        'currentStreak': currentStreak + 1,
+        'lastActive': Timestamp.fromDate(todayDate),
+      });
+    } else if (differenceDays > 1) {
+      await userRef.update({
+        'currentStreak': 1,
+        'lastActive': Timestamp.fromDate(todayDate),
+      });
+    }
+  }
 }

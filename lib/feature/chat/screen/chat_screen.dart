@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ai_lingo/feature/chat/ai_tutor/screens/free_practice_screen.dart';
+
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 

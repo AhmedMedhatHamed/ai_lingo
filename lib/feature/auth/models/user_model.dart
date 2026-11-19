@@ -7,6 +7,8 @@ class UserModel {
   final String language;
   final String level;
   final Timestamp createdAt;
+  final int currentStreak;
+  final Timestamp? lastActive;
 
   UserModel({
     required this.uid,
@@ -15,6 +17,8 @@ class UserModel {
     required this.language,
     required this.level,
     required this.createdAt,
+    this.currentStreak = 0,
+    this.lastActive,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,6 +29,8 @@ class UserModel {
       'language': language,
       'level': level,
       'createdAt': createdAt,
+      'currentStreak': currentStreak,
+      'lastActive': lastActive,
     };
   }
 
@@ -36,6 +42,8 @@ class UserModel {
       language: map['language'] ?? 'English',
       level: map['level'] ?? 'Beginner',
       createdAt: map['createdAt'] ?? Timestamp.now(),
+      currentStreak: map['currentStreak'] ?? 0,
+      lastActive: map['lastActive'],
     );
   }
 }
