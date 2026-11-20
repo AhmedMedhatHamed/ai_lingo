@@ -1,14 +1,53 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/auth/models/user_model.dart';
+import 'package:ai_lingo/feature/home/cubit/home_cubit.dart';
+import 'package:ai_lingo/feature/home/cubit/home_state.dart';
+import 'package:ai_lingo/feature/home/model/history_model.dart';
 import 'package:ai_lingo/feature/home/widgets/history_card_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
-class ConversationHistoryScreen extends StatelessWidget {
+class ConversationHistoryScreen extends StatefulWidget {
   const ConversationHistoryScreen({super.key});
 
   @override
+  State<ConversationHistoryScreen> createState() =>
+      _ConversationHistoryScreenState();
+}
+
+class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
+  IconData? getScenarioIcon(String icon) {
+    switch (icon) {
+      case 'coffee':
+        return Icons.coffee;
+      case 'airplanemode_active':
+        return Icons.airplanemode_active;
+      case 'work_outline':
+        return Icons.work_outline;
+      case 'store_outlined':
+        return Icons.store_outlined;
+      case 'health_and_safety':
+        return Icons.health_and_safety;
+      default:
+        return null;
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeCubit>().getUser();
+  }
+
+  UserModel? user;
+  List<HistoryModel> history = [];
+
+  @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -31,26 +70,44 @@ class ConversationHistoryScreen extends StatelessWidget {
                   style: AppStyles.almaraiBoldSize32,
                 ),
               ),
-              const SizedBox(height: 30.0),
-              HistoryCardItem(
-                icon: Icons.coffee,
-                iconColor: AppColors.secondaryColor,
-                title: 'Ordering Coffee',
-                time: 'Today 10:24 AM',
-              ),
-              const SizedBox(height: 14.0),
-              HistoryCardItem(
-                icon: Icons.flight,
-                iconColor: AppColors.secondaryColor,
-                title: 'Airport Check-in',
-                time: 'Yesterday 04:12 PM',
-              ),
-              const SizedBox(height: 14.0),
-              HistoryCardItem(
-                icon: Icons.work_outline,
-                iconColor: AppColors.secondaryColor,
-                title: 'Job Interview',
-                time: 'Yesterday 11:03 AM',
+              SizedBox(height: size.height * 0.04),
+              BlocConsumer<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  if (state is HomeLoadingState) {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primaryColor,
+                      ),
+                    );
+                  }
+
+                  if (state is HomeUserSuccessState) {
+                    user = state.user;
+                    history = user?.history ?? [];
+                  }
+
+                  return SizedBox(
+                    height: size.height * 0.75,
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        final historyItem = history[index];
+                        return HistoryCardItem(
+                          icon: getScenarioIcon(historyItem.icon) ?? Icons.chat,
+                          iconColor: AppColors.secondaryColor,
+                          title: historyItem.title,
+                          time: DateFormat(
+                            'dd MMM yyyy, hh:mm a',
+                          ).format(historyItem.createdAt.toDate()),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: size.height * 0.01);
+                      },
+                      itemCount: history.length,
+                    ),
+                  );
+                },
+                listener: (context, state) {},
               ),
             ],
           ),

@@ -1,3 +1,4 @@
+import 'package:ai_lingo/feature/home/model/history_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
@@ -9,6 +10,7 @@ class UserModel {
   final Timestamp createdAt;
   final int currentStreak;
   final Timestamp? lastActive;
+  final List<HistoryModel> history;
 
   UserModel({
     required this.uid,
@@ -19,6 +21,7 @@ class UserModel {
     required this.createdAt,
     this.currentStreak = 0,
     this.lastActive,
+    this.history = const [],
   });
 
   Map<String, dynamic> toMap() {
@@ -31,6 +34,7 @@ class UserModel {
       'createdAt': createdAt,
       'currentStreak': currentStreak,
       'lastActive': lastActive,
+      'history': history.map((historyModel) => historyModel.toMap()).toList(),
     };
   }
 
@@ -44,6 +48,9 @@ class UserModel {
       createdAt: map['createdAt'] ?? Timestamp.now(),
       currentStreak: map['currentStreak'] ?? 0,
       lastActive: map['lastActive'],
+      history: (map['history'] as List<dynamic>? ?? [])
+          .map((historyMap) => HistoryModel.fromMap(historyMap))
+          .toList(),
     );
   }
 }
