@@ -1,4 +1,5 @@
 import 'package:ai_lingo/feature/auth/models/user_model.dart';
+import 'package:ai_lingo/feature/home/model/history_model.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -34,7 +35,7 @@ class FirestoreService {
   }
 
   Future<void> updateStreak(String uid) async {
-    final userRef = await firestore.collection('users').doc(uid);
+    final userRef = firestore.collection('users').doc(uid);
     final user = await userRef.get();
 
     final currentStreak = user.data()?['currentStreak'] ?? 0;
@@ -67,5 +68,40 @@ class FirestoreService {
         'lastActive': Timestamp.fromDate(todayDate),
       });
     }
+  }
+
+  Future<void> checkStreak(String uid) async {
+    final userRef = firestore.collection('users').doc(uid);
+    final user = await userRef.get();
+
+    if (!user.exists) return;
+
+    if (user.data() == null) return;
+
+    final lastActive = user.data()!['lastActive'];
+
+    if (lastActive == null) return;
+
+    final today = DateTime.now();
+    final todayDate = DateTime(today.year, today.month, today.day);
+
+    final lastDate = lastActive.toDate();
+    final lastActiveDate = DateTime(
+      lastDate.year,
+      lastDate.month,
+      lastDate.day,
+    );
+
+    final differenceDays = todayDate.difference(lastActiveDate).inDays;
+
+    if (differenceDays > 1) {
+      await userRef.update({'currentStreak': 0});
+    }
+  }
+
+  Future<void> addToHistory(String uid, HistoryModel historyItem) async {
+    await firestore.collection('users').doc(uid).update({
+      'history': FieldValue.arrayUnion([historyItem.toMap()]),
+    });
   }
 }

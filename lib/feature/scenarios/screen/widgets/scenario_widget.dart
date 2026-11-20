@@ -1,7 +1,11 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/home/cubit/home_cubit.dart';
+import 'package:ai_lingo/feature/home/model/history_model.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../chat/ai_tutor/screens/ordering_coffee_screen.dart';
 
 enum Level { beginner, intermediate, advanced }
@@ -28,8 +32,8 @@ class ScenarioWidget extends StatelessWidget {
         return Icons.coffee;
       case 'airplanemode_active':
         return Icons.airplanemode_active;
-      case 'shopping_bag_outlined':
-        return Icons.shopping_bag_outlined;
+      case 'work_outline':
+        return Icons.work_outline;
       case 'store_outlined':
         return Icons.store_outlined;
       case 'health_and_safety':
@@ -64,7 +68,14 @@ class ScenarioWidget extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              await context.read<HomeCubit>().addToHistory(
+                HistoryModel(
+                  title: scenario.title,
+                  icon: scenario.icon,
+                  createdAt: Timestamp.now(),
+                ),
+              );
               if (scenario.title == 'Ordering Coffee') {
                 Navigator.push(
                   context,

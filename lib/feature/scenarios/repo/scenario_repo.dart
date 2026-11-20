@@ -32,7 +32,7 @@ final scenarios = [
   Scenario(
     title: 'Job Interview',
     description: 'Answer common interview questions with confidence.',
-    icon: 'shopping_bag_outlined',
+    icon: 'work_outline',
     level: 'Advanced',
   ),
   Scenario(

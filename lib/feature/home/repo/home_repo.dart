@@ -1,5 +1,6 @@
 import 'package:ai_lingo/core/services/firestore_service.dart';
 import 'package:ai_lingo/feature/auth/models/user_model.dart';
+import 'package:ai_lingo/feature/home/model/history_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeRepository {
@@ -21,5 +22,16 @@ class HomeRepository {
 
   Future<void> updateStreak() async {
     await firestoreService.updateStreak(FirebaseAuth.instance.currentUser!.uid);
+  }
+
+  Future<void> checkStreak() async {
+    await firestoreService.checkStreak(FirebaseAuth.instance.currentUser!.uid);
+  }
+
+  Future<void> addToHistory(HistoryModel historyItem) async {
+    await firestoreService.addToHistory(
+      FirebaseAuth.instance.currentUser!.uid,
+      historyItem,
+    );
   }
 }

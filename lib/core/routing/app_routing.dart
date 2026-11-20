@@ -126,7 +126,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => VocabularyScreen());
 
       case AppRoutes.conversationHistoryScreen:
-        return MaterialPageRoute(builder: (_) => ConversationHistoryScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(
+              homeRepository: HomeRepository(
+                firestoreService: FirestoreService(),
+              ),
+            ),
+            child: ConversationHistoryScreen(),
+          ),
+        );
 
       case AppRoutes.progressScreen:
         return MaterialPageRoute(builder: (_) => ProgressScreen());
