@@ -53,7 +53,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                           ),
                         ),
                         Text(
-                          user?.name ?? 'Guest',
+                          user?.name ?? '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppStyles.almarai400Size24.copyWith(
@@ -86,7 +86,7 @@ class _HomeHeaderState extends State<HomeHeader> {
                         fit: BoxFit.contain,
                       ),
                       Text(
-                        '${user?.currentStreak ?? 0} Days',
+                        '${user?.currentStreak ?? ''} Days',
                         style: AppStyles.almarai400Size24.copyWith(
                           fontWeight: FontWeight.w700,
                         ),

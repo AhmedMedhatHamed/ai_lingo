@@ -21,6 +21,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: 'Free Practice',
         icon: 'chat',
         createdAt: Timestamp.now(),
+        isCompleted: false,
       ),
     );
   }

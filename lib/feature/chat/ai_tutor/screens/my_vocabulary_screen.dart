@@ -1,6 +1,8 @@
 import 'package:ai_lingo/core/utils/app_strings.dart';
+import 'package:ai_lingo/feature/home/cubit/home_cubit.dart';
 import 'package:ai_lingo/feature/vocabulary/widgets/empty_vocabulary_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyVocabularyScreen extends StatefulWidget {
   const MyVocabularyScreen({super.key});
@@ -272,10 +274,21 @@ class _MyVocabularyScreenState extends State<MyVocabularyScreen> {
                               example: item['example'] as String,
                               status: item['status'] as String,
                               saved: item['saved'] as bool,
-                              onBookmark: () {
+                              onBookmark: () async {
                                 setState(() {
                                   item['saved'] = !(item['saved'] as bool);
                                 });
+                                if (item['saved']) {
+                                  await context.read<HomeCubit>().addWord(
+                                    item['word'],
+                                  );
+                                }
+
+                                if (!item['saved']) {
+                                  await context.read<HomeCubit>().removeWord(
+                                    item['word'],
+                                  );
+                                }
                               },
                             ),
                           ),

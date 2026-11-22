@@ -30,4 +30,22 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> addToHistory(HistoryModel historyItem) async {
     await homeRepository.addToHistory(historyItem);
   }
+
+  Future<void> addWord(String savedWord) async {
+    await homeRepository.addWord(savedWord);
+  }
+
+  Future<void> removeWord(String savedWord) async {
+    await homeRepository.removeWord(savedWord);
+  }
+
+  Future<void> getpopularScenarios() async {
+    emit(HomeLoadingState());
+    try {
+      final popScenarios = await homeRepository.getpopularScenarios();
+      emit(HomePopScenariosSuccessState(popularScenarios: popScenarios));
+    } catch (e) {
+      emit(HomePopScenariosErrorState(message: e.toString()));
+    }
+  }
 }

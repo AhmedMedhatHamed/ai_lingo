@@ -123,7 +123,16 @@ class AppRouter {
         );
 
       case AppRoutes.vocabularyScreen:
-        return MaterialPageRoute(builder: (_) => VocabularyScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(
+              homeRepository: HomeRepository(
+                firestoreService: FirestoreService(),
+              ),
+            ),
+            child: VocabularyScreen(),
+          ),
+        );
 
       case AppRoutes.conversationHistoryScreen:
         return MaterialPageRoute(
@@ -138,7 +147,16 @@ class AppRouter {
         );
 
       case AppRoutes.progressScreen:
-        return MaterialPageRoute(builder: (_) => ProgressScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(
+              homeRepository: HomeRepository(
+                firestoreService: FirestoreService(),
+              ),
+            ),
+            child: ProgressScreen(),
+          ),
+        );
 
       case AppRoutes.verifyAccount:
         return MaterialPageRoute(

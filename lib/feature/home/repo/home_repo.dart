@@ -1,6 +1,8 @@
 import 'package:ai_lingo/core/services/firestore_service.dart';
 import 'package:ai_lingo/feature/auth/models/user_model.dart';
 import 'package:ai_lingo/feature/home/model/history_model.dart';
+import 'package:ai_lingo/feature/home/widgets/popular_scenarios.dart';
+import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeRepository {
@@ -33,5 +35,31 @@ class HomeRepository {
       FirebaseAuth.instance.currentUser!.uid,
       historyItem,
     );
+  }
+
+  Future<void> addWord(String savedWord) async {
+    await firestoreService.addWord(
+      FirebaseAuth.instance.currentUser!.uid,
+      savedWord,
+    );
+  }
+
+  Future<void> removeWord(String savedWord) async {
+    await firestoreService.removeWord(
+      FirebaseAuth.instance.currentUser!.uid,
+      savedWord,
+    );
+  }
+
+  Future<List<Scenario>> getpopularScenarios() async {
+    final user = await getUser();
+    final popularScenariosMap = await firestoreService.getpopularScenarios(
+      user?.level ?? 'Beginner',
+    );
+
+    final popularScenarios = popularScenariosMap
+        .map((psMap) => Scenario.fromMap(psMap))
+        .toList();
+    return popularScenarios;
   }
 }
