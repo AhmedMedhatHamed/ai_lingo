@@ -74,6 +74,7 @@ class ScenarioWidget extends StatelessWidget {
                   title: scenario.title,
                   icon: scenario.icon,
                   createdAt: Timestamp.now(),
+                  isCompleted: false,
                 ),
               );
               if (scenario.title == 'Ordering Coffee') {

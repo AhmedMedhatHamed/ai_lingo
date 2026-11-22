@@ -88,26 +88,48 @@ class _ConversationHistoryScreenState extends State<ConversationHistoryScreen> {
 
                   return SizedBox(
                     height: size.height * 0.75,
-                    child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        final historyItem = history[index];
-                        return HistoryCardItem(
-                          icon: getScenarioIcon(historyItem.icon) ?? Icons.chat,
-                          iconColor: AppColors.secondaryColor,
-                          title: historyItem.title,
-                          time: DateFormat(
-                            'dd MMM yyyy, hh:mm a',
-                          ).format(historyItem.createdAt.toDate()),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(height: size.height * 0.01);
-                      },
-                      itemCount: history.length,
-                    ),
+                    child: history.isNotEmpty
+                        ? ListView.separated(
+                            itemBuilder: (context, index) {
+                              final historyItem = history[index];
+                              return HistoryCardItem(
+                                icon:
+                                    getScenarioIcon(historyItem.icon) ??
+                                    Icons.chat,
+                                iconColor: AppColors.secondaryColor,
+                                title: historyItem.title,
+                                time: DateFormat(
+                                  'dd MMM yyyy, hh:mm a',
+                                ).format(historyItem.createdAt.toDate()),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return SizedBox(height: size.height * 0.01);
+                            },
+                            itemCount: history.length,
+                          )
+                        : Center(
+                            child: Text(
+                              'No History Yet',
+                              style: AppStyles.inter400Size11.copyWith(
+                                fontSize: 20,
+                                fontWeight: .w600,
+                                color: AppColors.splashColor,
+                              ),
+                            ),
+                          ),
                   );
                 },
-                listener: (context, state) {},
+                listener: (context, state) {
+                  if (state is HomeUserErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(state.message),
+                      ),
+                    );
+                  }
+                },
               ),
             ],
           ),

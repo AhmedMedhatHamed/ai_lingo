@@ -11,6 +11,8 @@ class UserModel {
   final int currentStreak;
   final Timestamp? lastActive;
   final List<HistoryModel> history;
+  final List<String> savedWords;
+  final double progressPercentage;
 
   UserModel({
     required this.uid,
@@ -22,6 +24,8 @@ class UserModel {
     this.currentStreak = 0,
     this.lastActive,
     this.history = const [],
+    this.savedWords = const [],
+    this.progressPercentage = 0,
   });
 
   Map<String, dynamic> toMap() {
@@ -35,6 +39,8 @@ class UserModel {
       'currentStreak': currentStreak,
       'lastActive': lastActive,
       'history': history.map((historyModel) => historyModel.toMap()).toList(),
+      'savedWords': savedWords,
+      'progressPercentage': progressPercentage,
     };
   }
 
@@ -51,6 +57,8 @@ class UserModel {
       history: (map['history'] as List<dynamic>? ?? [])
           .map((historyMap) => HistoryModel.fromMap(historyMap))
           .toList(),
+      savedWords: List<String>.from(map['savedWords'] ?? []),
+      progressPercentage: map['progressPercentage'],
     );
   }
 }
