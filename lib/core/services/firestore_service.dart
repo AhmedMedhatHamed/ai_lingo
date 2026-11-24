@@ -20,4 +20,21 @@ class FirestoreService {
       'messagingInstallationIds': FieldValue.arrayUnion([installationId]),
     }, SetOptions(merge: true));
   }
+
+  Future<void> updateNotificationsEnabled(String uid, bool enabled) async {
+    await firestore.collection('users').doc(uid).set({
+      'notificationsEnabled': enabled,
+    }, SetOptions(merge: true));
+  }
+
+Future<void> removeMessagingInstallationId(
+  String uid,
+  String installationId,
+) async {
+  await firestore.collection('users').doc(uid).update({
+    'messagingInstallationIds':
+        FieldValue.arrayRemove([installationId]),
+  });
+}
+
 }

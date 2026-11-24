@@ -1,4 +1,4 @@
-class AppStrings {
+﻿class AppStrings {
   static const String appName = 'AI-Lingo';
   static const String onboardingTitle1 = 'Real Conversations\n& Real Progress';
   static const String onboardingTitle2 = 'Speak Freely & Learn\nDaily';
@@ -9,13 +9,8 @@ class AppStrings {
   static const String skip = 'skip';
   static const String next = 'Next';
   static const String getStarted = 'Get Started';
-  static const String alertTitle = 'Never Miss a Practice';
-  static const String alertDescription =
-      '"Enable notifications to get daily\n speaking reminders, streak updates,\n and new AI scenario alerts."';
-  static const String allow = 'Allow';
-  static const String doNotAllow = 'Don’t Allow';
   static const String signIn = 'Sign In';
-  static const String doNotHaveAnAccount = 'Don’t have an account';
+  static const String doNotHaveAnAccount = 'Donâ€™t have an account';
   static const String createAccount = 'Create Account';
   static const String signUpDescription =
       'Join AI-Lingo and start speaking today!';
@@ -78,3 +73,4 @@ class AppStrings {
   static const String settings = 'Settings';
   static const String notifications = 'Notifications';
 }
+
