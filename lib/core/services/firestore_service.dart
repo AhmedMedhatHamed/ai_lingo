@@ -1,4 +1,4 @@
-import 'package:ai_lingo/feature/auth/models/user_model.dart';
+﻿import 'package:ai_lingo/feature/auth/models/user_model.dart';
 import 'package:ai_lingo/feature/home/model/history_model.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:ai_lingo/feature/scenarios/repo/scenario_repo.dart';
@@ -34,6 +34,22 @@ class FirestoreService {
       'messagingInstallationIds': FieldValue.arrayUnion([installationId]),
     }, SetOptions(merge: true));
   }
+
+  Future<void> updateNotificationsEnabled(String uid, bool enabled) async {
+    await firestore.collection('users').doc(uid).set({
+      'notificationsEnabled': enabled,
+    }, SetOptions(merge: true));
+  }
+
+Future<void> removeMessagingInstallationId(
+  String uid,
+  String installationId,
+) async {
+  await firestore.collection('users').doc(uid).update({
+    'messagingInstallationIds':
+        FieldValue.arrayRemove([installationId]),
+  });
+}
 
   Future<void> updateStreak(String uid) async {
     final userRef = firestore.collection('users').doc(uid);
@@ -136,3 +152,4 @@ class FirestoreService {
     return popularScenarios;
   }
 }
+

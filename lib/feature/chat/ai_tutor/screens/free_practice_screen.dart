@@ -1,5 +1,7 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class FreePracticeScreen extends StatefulWidget {
   const FreePracticeScreen({super.key});
@@ -9,21 +11,22 @@ class FreePracticeScreen extends StatefulWidget {
 }
 
 class _FreePracticeScreenState extends State<FreePracticeScreen> {
+
   final TextEditingController _controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
+  // Android emulator: 10.0.2.2. Windows desktop: 127.0.0.1.
+  // For a physical phone, use your computer's LAN IP and bind the backend
+  // to 0.0.0.0 on a trusted local network.
+  static const String _backendUrl = 'https://ai-lingo-backend-hsor.onrender.com/chat';
+
   final List<Map<String, dynamic>> _messages = [
     {
-      'text': 'Hi Ahmed! 👋 What would you like to talk about today?',
-      'isUser': false,
-    },
-    {'text': "I'd love to improve my English speaking skills.", 'isUser': true},
-    {
-      'text':
-          "That's great! Let's practice together. Choose a topic or ask me anything.",
+      'text': 'Hi! I am your AI English tutor. What would you like to practice today?',
       'isUser': false,
     },
   ];
+  bool _isLoading = false;
 
   final List<String> _suggestions = [
     'Tell me a fun fact',
@@ -37,24 +40,71 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
     super.dispose();
   }
 
-  void _sendMessage([String? suggestion]) {
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted || !_scrollController.hasClients) return;
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
+  Future<void> _sendMessage([String? suggestion]) async {
+    if (_isLoading) return;
     final text = (suggestion ?? _controller.text).trim();
     if (text.isEmpty) return;
+
+    // Only send real user/model turns; the greeting above is UI-only.
+    final history = _messages.skip(1).map((m) => {
+      'role': (m['isUser'] as bool) ? 'user' : 'model',
+      'text': m['text'] as String,
+    }).toList();
+    // The backend accepts a maximum of 20 history items.
+    final recentHistory = history.length > 20
+        ? history.sublist(history.length - 20)
+        : history;
 
     setState(() {
       _messages.add({'text': text, 'isUser': true});
       _controller.clear();
+      _isLoading = true;
     });
+    _scrollToBottom();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
+    try {
+      final response = await http.post(
+        Uri.parse(_backendUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'message': text, 'history': recentHistory}),
+      ).timeout(const Duration(seconds: 45));
+
+      if (response.statusCode != 200) {
+        throw Exception('Backend returned ${response.statusCode}');
       }
-    });
+      final data = jsonDecode(response.body) as Map<String, dynamic>;
+      final reply = data['reply'];
+      if (reply is! String || reply.trim().isEmpty) {
+        throw const FormatException('Empty AI reply');
+      }
+      if (!mounted) return;
+      setState(() {
+        _messages.add({'text': reply.trim(), 'isUser': false});
+      });
+    } catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(
+          'Could not reach the AI tutor. Check that the backend is running.',
+        )),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        _scrollToBottom();
+      }
+    }
   }
 
   @override
@@ -117,7 +167,10 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.more_vert, color: Color(0xFF334155)),
+            icon: const Icon(
+              Icons.more_vert,
+              color: Color(0xFF334155),
+            ),
           ),
         ],
       ),
@@ -127,7 +180,10 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
             Container(
               width: double.infinity,
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 13,
+              ),
               child: const Row(
                 children: [
                   Icon(
@@ -146,11 +202,18 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                       ),
                     ),
                   ),
-                  Icon(Icons.auto_awesome, color: Color(0xFFF59E0B), size: 19),
+                  Icon(
+                    Icons.auto_awesome,
+                    color: Color(0xFFF59E0B),
+                    size: 19,
+                  ),
                   SizedBox(width: 5),
                   Text(
                     'Open topic',
-                    style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF64748B),
+                    ),
                   ),
                 ],
               ),
@@ -162,11 +225,20 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                 padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
                 children: [
                   ..._messages.map(
-                    (message) => _ChatBubble(
+                        (message) => _ChatBubble(
                       text: message['text'] as String,
                       isUser: message['isUser'] as bool,
                     ),
                   ),
+                  if (_isLoading)
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 12),
+                        child: Text('AI Tutor is typing...',
+                          style: TextStyle(color: Color(0xFF64748B))),
+                      ),
+                    ),
                   const SizedBox(height: 8),
                   const Align(
                     alignment: Alignment.centerLeft,
@@ -186,9 +258,11 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                     runSpacing: 8,
                     children: _suggestions.map((suggestion) {
                       return ActionChip(
-                        onPressed: () => _sendMessage(suggestion),
+                        onPressed: _isLoading ? null : () => _sendMessage(suggestion),
                         backgroundColor: Colors.white,
-                        side: const BorderSide(color: Color(0xFFBFDBFE)),
+                        side: const BorderSide(
+                          color: Color(0xFFBFDBFE),
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -215,7 +289,9 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 16),
               decoration: const BoxDecoration(
                 color: Colors.white,
-                border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+                border: Border(
+                  top: BorderSide(color: Color(0xFFE2E8F0)),
+                ),
               ),
               child: Row(
                 children: [
@@ -231,7 +307,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                       controller: _controller,
                       minLines: 1,
                       maxLines: 4,
-                      onSubmitted: (_) => _sendMessage(),
+                      onSubmitted: (_) { _sendMessage(); },
                       decoration: InputDecoration(
                         hintText: 'Type your message...',
                         hintStyle: const TextStyle(
@@ -256,7 +332,7 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(24),
                     child: InkWell(
-                      onTap: _sendMessage,
+                      onTap: _isLoading ? null : () { _sendMessage(); },
                       borderRadius: BorderRadius.circular(24),
                       child: const Padding(
                         padding: EdgeInsets.all(12),
@@ -279,7 +355,10 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
 }
 
 class _ChatBubble extends StatelessWidget {
-  const _ChatBubble({required this.text, required this.isUser});
+  const _ChatBubble({
+    required this.text,
+    required this.isUser,
+  });
 
   final String text;
   final bool isUser;
@@ -289,9 +368,8 @@ class _ChatBubble extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 18),
       child: Row(
-        mainAxisAlignment: isUser
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
+        mainAxisAlignment:
+        isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (!isUser) ...[
@@ -311,7 +389,10 @@ class _ChatBubble extends StatelessWidget {
               constraints: BoxConstraints(
                 maxWidth: MediaQuery.sizeOf(context).width * 0.74,
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 12,
+              ),
               decoration: BoxDecoration(
                 color: isUser ? const Color(0xFF1D4ED8) : Colors.white,
                 borderRadius: BorderRadius.only(
@@ -340,3 +421,4 @@ class _ChatBubble extends StatelessWidget {
     );
   }
 }
+

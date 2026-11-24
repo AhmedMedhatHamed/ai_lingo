@@ -1,11 +1,11 @@
-import 'package:ai_lingo/core/utils/app_colors.dart';
+﻿import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_strings.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
 import 'package:ai_lingo/core/widgets/custom_button.dart';
 import 'package:ai_lingo/feature/onboarding/model/onboarding_model.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'build_show_dialog.dart';
+import 'package:ai_lingo/core/routing/app_routes.dart';
 
 
 class PageViewWidget extends StatefulWidget {
@@ -75,7 +75,7 @@ class _PageViewWidgetState extends State<PageViewWidget> {
                           curve: Curves.easeInOut,
                         );
                       } else {
-                        buildShowDialog(context);
+                        Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
                       }
                     },
                   ),
@@ -90,4 +90,5 @@ class _PageViewWidgetState extends State<PageViewWidget> {
   }
 
 }
+
 
