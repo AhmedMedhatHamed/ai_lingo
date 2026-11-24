@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,21 +9,30 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   String? verificationId;
+  String? phoneNumber;
   int? resendToken;
 
-  Future<void> sendCode(String phoneNumber) async {
-    if (phoneNumber.trim().isEmpty) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: 'Please enter your phone number.',
-      ));
+  void _safeEmit(PhoneVerificationState state) {
+    if (!isClosed) emit(state);
+  }
+
+  Future<void> sendCode(String phone) async {
+    if (phone.trim().isEmpty) {
+      _safeEmit(
+        PhoneVerificationFailureState(
+          errorMsg: 'Please enter your phone number.',
+        ),
+      );
       return;
     }
 
-    emit(PhoneVerificationLoadingState());
+    phoneNumber = phone.trim();
+
+    _safeEmit(PhoneVerificationLoadingState());
 
     try {
       await firebaseAuth.verifyPhoneNumber(
-        phoneNumber: phoneNumber.trim(),
+        phoneNumber: phoneNumber!,
         timeout: const Duration(seconds: 60),
         forceResendingToken: resendToken,
 
@@ -33,16 +41,16 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
         },
 
         verificationFailed: (FirebaseAuthException e) {
-          emit(PhoneVerificationFailureState(
-            errorMsg: e.message ?? e.code,
-          ));
+          _safeEmit(
+            PhoneVerificationFailureState(errorMsg: e.message ?? e.code),
+          );
         },
 
         codeSent: (String id, int? token) {
           verificationId = id;
           resendToken = token;
 
-          emit(PhoneCodeSentState());
+          _safeEmit(PhoneCodeSentState());
         },
 
         codeAutoRetrievalTimeout: (String id) {
@@ -50,32 +58,32 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
         },
       );
     } on FirebaseAuthException catch (e) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: e.message ?? e.code,
-      ));
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.message ?? e.code));
     } catch (e) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: e.toString(),
-      ));
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.toString()));
     }
   }
 
   Future<void> verifyCode(String smsCode) async {
     if (verificationId == null) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: 'Please request the verification code first.',
-      ));
+      _safeEmit(
+        PhoneVerificationFailureState(
+          errorMsg: 'Please request the verification code first.',
+        ),
+      );
       return;
     }
 
     if (smsCode.trim().length != 6) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: 'Please enter a valid 6-digit code.',
-      ));
+      _safeEmit(
+        PhoneVerificationFailureState(
+          errorMsg: 'Please enter a valid 6-digit code.',
+        ),
+      );
       return;
     }
 
-    emit(PhoneVerifyingState());
+    _safeEmit(PhoneVerifyingState());
 
     try {
       final credential = PhoneAuthProvider.credential(
@@ -85,47 +93,51 @@ class PhoneVerificationCubit extends Cubit<PhoneVerificationState> {
 
       await linkPhoneNumber(credential);
     } on FirebaseAuthException catch (e) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: e.message ?? e.code,
-      ));
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.message ?? e.code));
     } catch (e) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: e.toString(),
-      ));
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.toString()));
     }
   }
 
-  Future<void> linkPhoneNumber(
-      PhoneAuthCredential credential,
-      ) async {
+  Future<void> linkPhoneNumber(PhoneAuthCredential credential) async {
     try {
       final user = firebaseAuth.currentUser;
 
       if (user == null) {
-        emit(PhoneVerificationFailureState(
-          errorMsg: 'Please sign up first.',
-        ));
+        _safeEmit(
+          PhoneVerificationFailureState(errorMsg: 'Please sign up first.'),
+        );
         return;
       }
 
       await user.linkWithCredential(credential);
 
-      await user.reload();
+      await firebaseAuth.currentUser?.reload();
 
-      emit(PhoneVerificationSuccessState());
+      final updatedUser = firebaseAuth.currentUser;
+
+      if (updatedUser?.phoneNumber != null) {
+        _safeEmit(PhoneVerificationSuccessState());
+      } else {
+        _safeEmit(
+          PhoneVerificationFailureState(
+            errorMsg: 'Phone number verification failed.',
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'provider-already-linked') {
-        emit(PhoneVerificationSuccessState());
-        return;
+        await firebaseAuth.currentUser?.reload();
+
+        if (firebaseAuth.currentUser?.phoneNumber != null) {
+          _safeEmit(PhoneVerificationSuccessState());
+          return;
+        }
       }
 
-      emit(PhoneVerificationFailureState(
-        errorMsg: e.message ?? e.code,
-      ));
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.message ?? e.code));
     } catch (e) {
-      emit(PhoneVerificationFailureState(
-        errorMsg: e.toString(),
-      ));
+      _safeEmit(PhoneVerificationFailureState(errorMsg: e.toString()));
     }
   }
 }

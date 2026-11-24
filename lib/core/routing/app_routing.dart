@@ -1,15 +1,19 @@
 import 'package:ai_lingo/core/services/firestore_service.dart';
+import 'package:ai_lingo/feature/auth/forgot_password/cubit/forgot_password_cubit.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/forgot_password_screen.dart';
 import 'package:ai_lingo/feature/auth/forgot_password/screen/new_password_screen.dart';
 import 'package:ai_lingo/feature/auth/repo/user_repo.dart';
 import 'package:ai_lingo/feature/auth/sign_in/cubit/sign_in_cubit.dart';
 import 'package:ai_lingo/feature/auth/signup/cubit/signup_cubit.dart';
+import 'package:ai_lingo/feature/auth/verification/cubit/phone_verification_cubit.dart';
 import 'package:ai_lingo/feature/auth/verification/verification_screen.dart';
 import 'package:ai_lingo/feature/auth/login/screen/login_screen.dart';
 import 'package:ai_lingo/feature/auth/sign_in/sign_in_screen.dart';
 import 'package:ai_lingo/feature/auth/signup/signup_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/conversation_history_screen.dart';
 import 'package:ai_lingo/feature/home/screen/screen/progress_screen.dart';
+import 'package:ai_lingo/feature/profile/cubit/auth_cubit.dart';
+import 'package:ai_lingo/feature/profile/screen/verify_account.dart';
 import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
 import 'package:ai_lingo/feature/profile_setup/screen/profile_setup_screen.dart';
@@ -46,9 +50,21 @@ class AppRouter {
         );
 
       case AppRoutes.forgotPasswordScreen:
-        return MaterialPageRoute(builder: (_) => ForgotPasswordScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => ForgotPasswordCubit(),
+            child: ForgotPasswordScreen(),
+          ),
+        );
+
       case AppRoutes.verificationScreen:
-        return MaterialPageRoute(builder: (_) => const VerificationScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => PhoneVerificationCubit(),
+            child: const VerificationScreen(),
+          ),
+        );
+
       case AppRoutes.newPasswordScreen:
         return MaterialPageRoute(builder: (_) => NewPasswordScreen());
 
@@ -63,10 +79,17 @@ class AppRouter {
         );
 
       case AppRoutes.editProfileScreen:
-        return MaterialPageRoute(builder: (_) => EditProfileScreen());
+        return MaterialPageRoute(builder: (_) => BlocProvider(
+          create: (context) => AuthCubit(),
+            child: EditProfileScreen()));
 
       case AppRoutes.changePasswordScreen:
-        return MaterialPageRoute(builder: (_) => ChangePasswordScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => AuthCubit(),
+            child: ChangePasswordScreen(),
+          ),
+        );
 
       case AppRoutes.mainNavigation:
         return MaterialPageRoute(builder: (_) => MainNavigation());
@@ -79,6 +102,14 @@ class AppRouter {
 
       case AppRoutes.progressScreen:
         return MaterialPageRoute(builder: (_) => ProgressScreen());
+
+      case AppRoutes.verifyAccount:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => PhoneVerificationCubit(),
+            child: VerifyAccount(),
+          ),
+        );
     }
 
     return null;

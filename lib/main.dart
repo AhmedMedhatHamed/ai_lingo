@@ -2,6 +2,7 @@ import 'package:ai_lingo/core/notifications/notification_handler.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'ai_lingo.dart';
 import 'firebase_options.dart';
