@@ -1,7 +1,11 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
+import 'package:ai_lingo/feature/home/cubit/home_cubit.dart';
+import 'package:ai_lingo/feature/home/model/history_model.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../chat/ai_tutor/screens/ordering_coffee_screen.dart';
 
 enum Level { beginner, intermediate, advanced }
@@ -22,6 +26,23 @@ class ScenarioWidget extends StatelessWidget {
     }
   }
 
+  IconData? getScenarioIcon(String icon) {
+    switch (icon) {
+      case 'coffee':
+        return Icons.coffee;
+      case 'airplanemode_active':
+        return Icons.airplanemode_active;
+      case 'work_outline':
+        return Icons.work_outline;
+      case 'store_outlined':
+        return Icons.store_outlined;
+      case 'health_and_safety':
+        return Icons.health_and_safety;
+      default:
+        return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -34,11 +55,12 @@ class ScenarioWidget extends StatelessWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(
-            scenario.icon,
-            color: AppColors.secondaryColor,
-            size: size.height * 0.045,
-          ),
+          if (getScenarioIcon(scenario.icon) != null)
+            Icon(
+              getScenarioIcon(scenario.icon),
+              color: AppColors.secondaryColor,
+              size: size.height * 0.045,
+            ),
           Expanded(
             child: Text(
               scenario.title,
@@ -46,7 +68,15 @@ class ScenarioWidget extends StatelessWidget {
             ),
           ),
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              await context.read<HomeCubit>().addToHistory(
+                HistoryModel(
+                  title: scenario.title,
+                  icon: scenario.icon,
+                  createdAt: Timestamp.now(),
+                  isCompleted: false,
+                ),
+              );
               if (scenario.title == 'Ordering Coffee') {
                 Navigator.push(
                   context,
@@ -56,10 +86,7 @@ class ScenarioWidget extends StatelessWidget {
                 );
               }
             },
-            icon: Icon(
-              Icons.arrow_forward_ios,
-              size: size.height * 0.05,
-            ),
+            icon: Icon(Icons.arrow_forward_ios, size: size.height * 0.05),
           ),
         ],
       ),

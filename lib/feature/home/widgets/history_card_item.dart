@@ -29,13 +29,13 @@ class HistoryCardItem extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         leading: Icon(icon, color: iconColor, size: 28.0),
-        title: Text(
-          title,
-          style:  AppStyles.cairo400Size24,
-        ),
+        title: Text(title, style: AppStyles.cairo400Size24),
         subtitle: Text(
           time,
-          style: AppStyles.cairo400Size24.copyWith(color: AppColors.splashColor,fontSize: 20.0),
+          style: AppStyles.cairo400Size24.copyWith(
+            color: AppColors.splashColor,
+            fontSize: 20.0,
+          ),
         ),
         trailing: const Icon(
           Icons.arrow_forward_ios,

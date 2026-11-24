@@ -1,4 +1,4 @@
-﻿import 'package:ai_lingo/core/utils/app_colors.dart';
+import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
