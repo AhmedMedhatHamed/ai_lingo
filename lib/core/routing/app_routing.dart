@@ -18,6 +18,7 @@ import 'package:ai_lingo/feature/home/screen/screen/progress_screen.dart';
 import 'package:ai_lingo/feature/profile/cubit/auth_cubit.dart';
 import 'package:ai_lingo/feature/profile/screen/verify_account.dart';
 import 'package:ai_lingo/feature/scenarios/cubit/scenarios_cubit.dart';
+import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:ai_lingo/feature/scenarios/repo/scenario_repo.dart';
 import 'package:ai_lingo/main_navigation.dart';
 import 'package:ai_lingo/feature/onboarding/screen/onboarding_screen.dart';
@@ -167,6 +168,7 @@ class AppRouter {
         );
 
       case AppRoutes.chatScreen:
+        final scenario = settings.arguments as Scenario;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => HomeCubit(
@@ -174,7 +176,7 @@ class AppRouter {
                 firestoreService: FirestoreService(),
               ),
             ),
-            child: ChatScreen(),
+            child: ChatScreen(scenario: scenario),
           ),
         );
     }
