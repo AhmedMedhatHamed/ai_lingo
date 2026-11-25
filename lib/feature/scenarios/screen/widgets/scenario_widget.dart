@@ -1,3 +1,4 @@
+import 'package:ai_lingo/core/routing/app_routes.dart';
 import 'package:ai_lingo/core/utils/app_colors.dart';
 import 'package:ai_lingo/core/utils/app_styles.dart';
 import 'package:ai_lingo/feature/home/cubit/home_cubit.dart';
@@ -77,14 +78,11 @@ class ScenarioWidget extends StatelessWidget {
                   isCompleted: false,
                 ),
               );
-              if (scenario.title == 'Ordering Coffee') {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const OrderingCoffeeScreen(),
-                  ),
-                );
-              }
+              Navigator.pushNamed(
+                context,
+                AppRoutes.chatScreen,
+                arguments: scenario,
+              );
             },
             icon: Icon(Icons.arrow_forward_ios, size: size.height * 0.05),
           ),
