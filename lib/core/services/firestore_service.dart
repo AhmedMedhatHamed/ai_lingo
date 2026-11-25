@@ -41,15 +41,14 @@ class FirestoreService {
     }, SetOptions(merge: true));
   }
 
-Future<void> removeMessagingInstallationId(
-  String uid,
-  String installationId,
-) async {
-  await firestore.collection('users').doc(uid).update({
-    'messagingInstallationIds':
-        FieldValue.arrayRemove([installationId]),
-  });
-}
+  Future<void> removeMessagingInstallationId(
+    String uid,
+    String installationId,
+  ) async {
+    await firestore.collection('users').doc(uid).update({
+      'messagingInstallationIds': FieldValue.arrayRemove([installationId]),
+    });
+  }
 
   Future<void> updateStreak(String uid) async {
     final userRef = firestore.collection('users').doc(uid);
@@ -151,5 +150,115 @@ Future<void> removeMessagingInstallationId(
 
     return popularScenarios;
   }
-}
 
+  Future<void> completeConversation(String uid) async {
+    final userRef = firestore.collection('users').doc(uid);
+
+    final user = await userRef.get();
+
+    if (!user.exists || user.data() == null) return;
+
+    final List<Map<String, dynamic>> history = [];
+
+    for (var historyItem in user.data()!['history']) {
+      history.add(historyItem as Map<String, dynamic>);
+    }
+
+    history[history.length - 1]['isCompleted'] = true;
+
+    await userRef.update({'history': history});
+  }
+
+  Future<void> updateCompletedConversations(String uid) async {
+    final userRef = firestore.collection('users').doc(uid);
+
+    final user = await userRef.get();
+
+    if (!user.exists || user.data() == null) return;
+
+    final List<Map<String, dynamic>> history = [];
+
+    for (var historyItem in user.data()!['history']) {
+      history.add(historyItem as Map<String, dynamic>);
+    }
+
+    int completedConversations = 0;
+
+    for (var historyItem in history) {
+      if (historyItem['isCompleted']) {
+        completedConversations++;
+      }
+    }
+
+    await userRef.update({'completedConversations': completedConversations});
+  }
+
+  Future<void> calcProgressPercentage(String uid) async {
+    final userRef = firestore.collection('users').doc(uid);
+
+    final user = await userRef.get();
+
+    if (!user.exists || user.data() == null) return;
+
+    final List<Map<String, dynamic>> history = [];
+
+    for (var historyItem in user.data()!['history']) {
+      history.add(historyItem as Map<String, dynamic>);
+    }
+
+    final allScenarios = (await getScenarios()).docs
+        .map((doc) => doc.data())
+        .toList();
+
+    List<Map<String, dynamic>> uLevelCompletedScenariosInhistory = [];
+
+    final allUserLevelScenarios = allScenarios
+        .where(
+          (scenario) =>
+              scenario['level'].toLowerCase() ==
+              user.data()!['level'].toLowerCase(),
+        )
+        .toList();
+
+    for (var scenario in allUserLevelScenarios) {
+      for (var historyItem in history) {
+        if (historyItem['isCompleted'] &&
+            scenario['title'].toLowerCase() ==
+                historyItem['title'].toLowerCase() &&
+            !uLevelCompletedScenariosInhistory.contains(scenario)) {
+          uLevelCompletedScenariosInhistory.add(scenario);
+        }
+      }
+    }
+
+    if (allUserLevelScenarios.isEmpty) {
+      await userRef.update({'progressPercentage': 0.0});
+      return;
+    }
+
+    final double progressPercentage =
+        (uLevelCompletedScenariosInhistory.length /
+            allUserLevelScenarios.length) *
+        100;
+    await userRef.update({'progressPercentage': progressPercentage});
+  }
+
+  Future<void> upgradeLevel(String uid) async {
+    final userRef = firestore.collection('users').doc(uid);
+
+    final user = await userRef.get();
+
+    if (!user.exists || user.data() == null) return;
+
+    if (user.data()!['progressPercentage'].toInt() == 100) {
+      switch (user.data()!['level']) {
+        case 'Beginner':
+          await userRef.update({'level': 'Intermediate'});
+        case 'Intermediate':
+          await userRef.update({'level': 'Advanced'});
+        default:
+          return;
+      }
+    }
+  }
+}
