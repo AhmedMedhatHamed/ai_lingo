@@ -62,4 +62,26 @@ class HomeRepository {
         .toList();
     return popularScenarios;
   }
+
+  Future<void> completeConversation() async {
+    await firestoreService.completeConversation(
+      FirebaseAuth.instance.currentUser!.uid,
+    );
+  }
+
+  Future<void> updateCompletedConversations() async {
+    await firestoreService.updateCompletedConversations(
+      FirebaseAuth.instance.currentUser!.uid,
+    );
+  }
+
+  Future<void> calcProgressPercentage() async {
+    await firestoreService.calcProgressPercentage(
+      FirebaseAuth.instance.currentUser!.uid,
+    );
+  }
+
+  Future<void> upgradeLevel() async {
+    await firestoreService.upgradeLevel(FirebaseAuth.instance.currentUser!.uid);
+  }
 }

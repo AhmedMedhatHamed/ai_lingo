@@ -168,7 +168,9 @@ class AppRouter {
         );
 
       case AppRoutes.chatScreen:
-        final scenario = settings.arguments as Scenario;
+        final scenario = settings.arguments != null
+            ? settings.arguments as Scenario
+            : null;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => HomeCubit(

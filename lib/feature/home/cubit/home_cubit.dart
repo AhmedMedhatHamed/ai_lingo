@@ -48,4 +48,20 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomePopScenariosErrorState(message: e.toString()));
     }
   }
+
+  Future<void> completeConversation() async {
+    await homeRepository.completeConversation();
+  }
+
+  Future<void> updateCompletedConversations() async {
+    await homeRepository.updateCompletedConversations();
+  }
+
+  Future<void> calcProgressPercentage() async {
+    await homeRepository.calcProgressPercentage();
+  }
+
+  Future<void> upgradeLevel() async {
+    await homeRepository.upgradeLevel();
+  }
 }

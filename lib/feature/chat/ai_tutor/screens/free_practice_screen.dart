@@ -1,6 +1,8 @@
 import 'package:ai_lingo/core/utils/app_colors.dart';
+import 'package:ai_lingo/feature/home/cubit/home_cubit.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -99,6 +101,12 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
       setState(() {
         _messages.add({'text': reply.trim(), 'isUser': false});
       });
+      sentMessages++;
+
+      if (sentMessages == 5) {
+        await context.read<HomeCubit>().completeConversation();
+        await context.read<HomeCubit>().updateCompletedConversations();
+      }
     } catch (error) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -132,6 +140,8 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
         return null;
     }
   }
+
+  int sentMessages = 0;
 
   @override
   Widget build(BuildContext context) {

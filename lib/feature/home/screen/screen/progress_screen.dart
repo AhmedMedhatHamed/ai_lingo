@@ -56,7 +56,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     Row(
                       children: [
                         Text(
-                          '60%',
+                          '${user?.progressPercentage.toInt()}%',
                           style: AppStyles.inter400Size11.copyWith(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -70,7 +70,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                               size.height * 0.01,
                             ),
                             child: LinearProgressIndicator(
-                              value: 0.6,
+                              value: (user?.progressPercentage ?? 0) / 100,
                               minHeight: size.height * 0.014,
                               backgroundColor: const Color(0xFFE2E8F0),
                               valueColor: AlwaysStoppedAnimation<Color>(
@@ -107,7 +107,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
                       icon: Icons.smart_toy_outlined,
                       iconColor: AppColors.secondaryColor,
                       title: AppStrings.completedConversations,
-                      value: '4',
+                      value: user?.completedConversations.toString() ?? '',
                     ),
                     SizedBox(height: size.height * 0.02),
                   ],
