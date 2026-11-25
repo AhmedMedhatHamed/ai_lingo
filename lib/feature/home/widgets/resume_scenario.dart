@@ -48,7 +48,7 @@ class ResumeScenario extends StatelessWidget {
             color: AppColors.secondaryColor,
             size: size.height * 0.05,
           ),
-          SizedBox(width: size.width * 0.08),
+          SizedBox(width: size.width * 0.04),
           Text(
             scenario.title,
             style: AppStyles.cairo700Size36.copyWith(fontSize: 28),
