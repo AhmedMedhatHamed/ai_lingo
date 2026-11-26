@@ -107,8 +107,6 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
         await context.read<HomeCubit>().completeConversation();
         await context.read<HomeCubit>().updateCompletedConversations();
         await context.read<HomeCubit>().upgradeLevel();
-        await context.read<HomeCubit>().calcProgressPercentage();
-        await context.read<HomeCubit>().getpopularScenarios();
       }
     } catch (error) {
       if (!mounted) return;
@@ -168,6 +166,13 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Row(
             children: [
+              if (widget.scenario != null)
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back_ios),
+                ),
               CircleAvatar(
                 radius: 21,
                 backgroundColor: const Color(0xFFE8EEFF),

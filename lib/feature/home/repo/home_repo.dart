@@ -1,7 +1,6 @@
 import 'package:ai_lingo/core/services/firestore_service.dart';
 import 'package:ai_lingo/feature/auth/models/user_model.dart';
 import 'package:ai_lingo/feature/home/model/history_model.dart';
-import 'package:ai_lingo/feature/home/widgets/popular_scenarios.dart';
 import 'package:ai_lingo/feature/scenarios/model/scenario.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -52,9 +51,7 @@ class HomeRepository {
   }
 
   Future<List<Scenario>> getpopularScenarios() async {
-    final user = await getUser();
     final popularScenariosMap = await firestoreService.getpopularScenarios(
-      user?.level ?? 'Beginner',
       FirebaseAuth.instance.currentUser!.uid,
     );
 

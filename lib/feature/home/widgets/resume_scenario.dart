@@ -57,8 +57,8 @@ class ResumeScenario extends StatelessWidget {
       ),
       subtitle: Center(
         child: GestureDetector(
-          onTap: () {
-            context.read<HomeCubit>().addToHistory(
+          onTap: () async {
+            await context.read<HomeCubit>().addToHistory(
               HistoryModel(
                 title: scenario.title,
                 icon: scenario.icon,
@@ -66,11 +66,15 @@ class ResumeScenario extends StatelessWidget {
                 isCompleted: false,
               ),
             );
-            Navigator.pushNamed(
+            await Navigator.pushNamed(
               context,
               AppRoutes.chatScreen,
               arguments: scenario,
             );
+
+            if (!context.mounted) return;
+
+            await context.read<HomeCubit>().getpopularScenarios();
           },
           child: Text(
             AppStrings.resume,

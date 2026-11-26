@@ -78,11 +78,15 @@ class ScenarioWidget extends StatelessWidget {
                   isCompleted: false,
                 ),
               );
-              Navigator.pushNamed(
+              await Navigator.pushNamed(
                 context,
                 AppRoutes.chatScreen,
                 arguments: scenario,
               );
+
+              if (!context.mounted) return;
+
+              await context.read<HomeCubit>().getpopularScenarios();
             },
             icon: Icon(Icons.arrow_forward_ios, size: size.height * 0.05),
           ),
