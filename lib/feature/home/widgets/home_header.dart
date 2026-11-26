@@ -20,11 +20,8 @@ class _HomeHeaderState extends State<HomeHeader> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeCubit>().calcProgressPercentage();
-
     context.read<HomeCubit>().getUser();
     context.read<HomeCubit>().checkStreak();
-    context.read<HomeCubit>().upgradeLevel();
   }
 
   @override

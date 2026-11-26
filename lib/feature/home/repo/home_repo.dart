@@ -55,6 +55,7 @@ class HomeRepository {
     final user = await getUser();
     final popularScenariosMap = await firestoreService.getpopularScenarios(
       user?.level ?? 'Beginner',
+      FirebaseAuth.instance.currentUser!.uid,
     );
 
     final popularScenarios = popularScenariosMap

@@ -137,10 +137,23 @@ class FirestoreService {
     });
   }
 
-  Future<List<Map<String, dynamic>>> getpopularScenarios(String uLevel) async {
+  Future<List<Map<String, dynamic>>> getpopularScenarios(
+    String uLevel,
+    String uid,
+  ) async {
     final totalScenarios = await getScenarios();
-
+    var user = await getUser(uid);
     final List<Map<String, dynamic>> popularScenarios = [];
+
+    if (!user.exists || user.data() == null) return [];
+
+    if (user.data()!['progressPercentage'] == 100) {
+      if (user.data()!['level'] == 'Beginner') {
+        uLevel = 'Intermediate';
+      } else if (user.data()!['level'] == 'Intermediate') {
+        uLevel = 'Advanced';
+      }
+    }
 
     for (var scenarioDoc in totalScenarios.docs) {
       if (scenarioDoc.data()['level'] == uLevel) {
@@ -253,9 +266,17 @@ class FirestoreService {
     if (user.data()!['progressPercentage'].toInt() == 100) {
       switch (user.data()!['level']) {
         case 'Beginner':
-          await userRef.update({'level': 'Intermediate'});
+          await userRef.update({
+            'progressPercentage': 0.0,
+            'level': 'Intermediate',
+          });
+          break;
         case 'Intermediate':
-          await userRef.update({'level': 'Advanced'});
+          await userRef.update({
+            'progressPercentage': 0.0,
+            'level': 'Advanced',
+          });
+          break;
         default:
           return;
       }

@@ -106,6 +106,9 @@ class _FreePracticeScreenState extends State<FreePracticeScreen> {
       if (sentMessages == 5) {
         await context.read<HomeCubit>().completeConversation();
         await context.read<HomeCubit>().updateCompletedConversations();
+        await context.read<HomeCubit>().upgradeLevel();
+        await context.read<HomeCubit>().calcProgressPercentage();
+        await context.read<HomeCubit>().getpopularScenarios();
       }
     } catch (error) {
       if (!mounted) return;
